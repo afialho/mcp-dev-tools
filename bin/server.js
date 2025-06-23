@@ -210,8 +210,8 @@ class DevUtilsServer {
     
     const isValid = emailRegex.test(email);
     const resultado = isValid 
-      ? `✅ **Email XXXVálido**\n\n📧 \`${email}\` tem formato correto.`
-      : `❌ **Email AAAInválido**\n\n📧 \`${email}\` não tem formato correto.\n\n**Problemas possíveis:**\n- Falta @\n- Domínio inválido\n- Caracteres especiais incorretos`;
+      ? `✅ **Email Válido**\n\n📧 \`${email}\` tem formato correto.`
+      : `❌ **Email Inválido**\n\n📧 \`${email}\` não tem formato correto.\n\n**Problemas possíveis:**\n- Falta @\n- Domínio inválido\n- Caracteres especiais incorretos`;
 
     return {
       content: [
