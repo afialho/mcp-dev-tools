@@ -1,0 +1,50 @@
+{
+  "name": "mcp-dev-utils",
+  "version": "1.0.0",
+  "description": "MCP Server com utilidades para desenvolvedores",
+  "main": "index.js",
+  "bin": {
+    "mcp-dev-server": "./bin/server.js",
+    "mcp-dev-configure": "./scripts/configure.js"
+  },
+  "scripts": {
+    "start": "node bin/server.js",
+    "dev": "nodemon bin/server.js",
+    "test": "node test.js",
+    "postinstall": "node scripts/configure.js",
+    "prepublishOnly": "npm test"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/afialho/mcp-dev-utils.git"
+  },
+  "keywords": [
+    "mcp", 
+    "development", 
+    "utilities", 
+    "augment-code",
+    "developer-tools"
+  ],
+  "author": "Adriano Fialho <adriano@agilize.com.br>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/afialho/mcp-dev-utils/issues"
+  },
+  "homepage": "https://github.com/afialho/mcp-dev-utils#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "preferGlobal": true,
+  "files": [
+    "bin/",
+    "scripts/",
+    "index.js",
+    "README.md"
+  ]
+}
