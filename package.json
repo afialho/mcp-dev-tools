@@ -10,8 +10,18 @@
     "start": "node bin/server.js",
     "dev": "nodemon bin/server.js",
     "test": "node tests/run-all-tests.js",
-    "test:tools": "node tests/tools.test.js",
-    "test:server": "node tests/server.test.js"
+    "test:tools": "node tests/run-tools-tests.js",
+    "test:uuid": "node tests/tools/uuid-generator.test.js",
+    "test:email": "node tests/tools/email-validator.test.js",
+    "test:hash": "node tests/tools/hash-generator.test.js",
+    "test:json": "node tests/tools/json-formatter.test.js",
+    "test:age": "node tests/tools/age-calculator.test.js",
+    "test:registry": "node tests/utils/tool-registry.test.js",
+    "test:server": "node tests/integration/server.test.js",
+    "prepublishOnly": "npm test",
+    "prepack": "npm test",
+    "version": "npm test && git add -A",
+    "postversion": "git push && git push --tags"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^0.5.0"
