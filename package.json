@@ -1,14 +1,17 @@
 {
   "name": "mcp-dev-utils",
-  "version": "1.0.0",
-  "description": "MCP Server com utilidades essenciais para desenvolvedores",
+  "version": "1.1.0",
+  "description": "MCP Server com utilidades essenciais para desenvolvedores - Arquitetura modular e extensível",
   "main": "bin/server.js",
   "bin": {
     "mcp-dev-utils": "./bin/server.js"
   },
   "scripts": {
     "start": "node bin/server.js",
-    "test": "node bin/server.js --test"
+    "dev": "nodemon bin/server.js",
+    "test": "node tests/run-all-tests.js",
+    "test:tools": "node tests/tools.test.js",
+    "test:server": "node tests/server.test.js"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^0.5.0"
@@ -18,11 +21,14 @@
     "url": "git+https://github.com/afialho/mcp-dev-utils.git"
   },
   "keywords": [
-    "mcp", 
+    "mcp",
     "model-context-protocol",
-    "development", 
-    "utilities", 
-    "developer-tools"
+    "development",
+    "utilities",
+    "developer-tools",
+    "modular",
+    "extensible",
+    "refactored"
   ],
   "author": "Adriano Fialho",
   "license": "MIT",
@@ -34,7 +40,10 @@
     "node": ">=18.0.0"
   },
   "files": [
-    "bin/server.js",
+    "bin/",
+    "tools/",
+    "utils/",
+    "tests/",
     "README.md"
   ]
 }
