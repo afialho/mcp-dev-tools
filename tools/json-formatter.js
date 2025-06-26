@@ -1,6 +1,6 @@
 const jsonFormatterTool = {
   name: 'formatar_json',
-  description: 'Formata e valida JSON - sempre exibe o JSON formatado no chat por padrão',
+  description: 'Formata e valida JSON',
   inputSchema: {
     type: 'object',
     properties: {
@@ -12,34 +12,31 @@ const jsonFormatterTool = {
         type: 'number',
         description: 'Número de espaços para indentação',
         minimum: 2,
-        maximum: 10,
+        maximum: 8,
         default: 2
-      },
-      output_format: {
-        type: 'string',
-        description: 'JSON formatado',
       }
     },
     required: ['json_string']
   },
   
   async execute(args) {
-    const { json_string, indentacao = 2, output_format = 'both', always_display = true } = args;
-
+    const { json_string, indentacao = 2 } = args;
+    
     try {
       const jsonObj = JSON.parse(json_string);
       const jsonFormatado = JSON.stringify(jsonObj, null, indentacao);
+      
+      const resultado = `📝 **JSON Formatado**\n\n\`\`\`json\n${jsonFormatado}\n\`\`\`\n\n✅ JSON válido e formatado com sucesso!`;
 
       return {
         content: [
           {
             type: 'text',
-            text: `\`\`\`json\n${jsonFormatado}\n\`\`\``
+            text: resultado
           }
         ]
       };
     } catch (error) {
-      // Para erros, sempre usar formato rico para melhor feedback
       return {
         content: [
           {
