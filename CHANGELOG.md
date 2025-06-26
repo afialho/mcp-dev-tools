@@ -5,6 +5,37 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2024-12-26
+
+### Added
+- ✨ **Instruções completas de publicação no npm registry** no README
+- ✨ **Scripts automáticos** para versionamento e publicação:
+  - `prepublishOnly`: Executa testes antes de publicar
+  - `prepack`: Executa testes antes de empacotar
+  - `version`: Testa e adiciona mudanças ao commit
+  - `postversion`: Push automático após versioning
+- ✨ **Arquivo .npmignore** para otimização do pacote publicado
+- ✨ **CHANGELOG.md** para documentação de versões
+- ✨ **Workflow GitHub Actions** para publicação automatizada
+- ✨ **Checklist completo** de publicação no README
+
+### Changed
+- 🔄 **README.md expandido** com seção detalhada de publicação
+- 🔄 **package.json** com scripts automáticos de lifecycle
+- 🔄 **Documentação de versionamento semântico** com exemplos práticos
+
+### Improved
+- ⚡ **Processo de publicação automatizado** com validação de qualidade
+- ⚡ **Fluxo de desenvolvimento** otimizado com scripts automáticos
+- ⚡ **Qualidade garantida** com testes obrigatórios antes da publicação
+- ⚡ **Documentação profissional** para contribuidores e mantenedores
+
+### Technical
+- 🔧 **Configuração completa** para publicação no npm registry
+- 🔧 **Automação de git operations** durante versionamento
+- 🔧 **Otimização do tamanho** do pacote com .npmignore
+- 🔧 **Padronização do processo** de release
+
 ## [1.1.0] - 2024-12-25
 
 ### Added
