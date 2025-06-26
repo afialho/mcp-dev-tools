@@ -8,7 +8,7 @@ async function testValidJSON() {
   await testTool(
     jsonFormatter,
     { json_string: validJson, indentacao: 2 },
-    ['```json', '"name": "test"', '✅']
+    ['```json', '"name": "test"', '"value": 123']
   );
 
   console.log('  ✅ JSON válido formatado com sucesso');
@@ -34,7 +34,7 @@ async function testCustomIndentation() {
   await testTool(
     jsonFormatter,
     { json_string: json, indentacao: 4 },
-    ['```json', '"test": true', '✅']
+    ['```json', '"test": true']
   );
 
   console.log('  ✅ Indentação customizada funcionando');

@@ -5,6 +5,20 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.4] - 2025-06-26
+
+### Fixed
+- 🔧 **JSON Formatter**: Corrigida exibição do JSON formatado no chat
+  - ✅ **Markdown formatting**: JSON agora é exibido com syntax highlighting
+  - ✅ **Bloco de código**: Envolvido em ```json para formatação adequada
+  - ✅ **Visualização melhorada**: JSON formatado aparece corretamente no chat
+  - 🐛 **Bug fix**: Resolvia problema onde JSON não era exibido visualmente
+
+### Technical
+- 🔧 **tools/json-formatter.js**: Adicionado wrapper markdown para output
+- 🔧 **Return format**: Mudança de texto simples para bloco de código markdown
+- 🔧 **Zero breaking changes**: Compatibilidade total mantida
+
 ## [1.3.3] - 2025-06-26
 
 ### Improved
