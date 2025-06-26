@@ -5,7 +5,7 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.1.1] - 2024-12-26
+## [1.1.1] - 2025-06-25
 
 ### Added
 - ✨ **Instruções completas de publicação no npm registry** no README
@@ -36,7 +36,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - 🔧 **Otimização do tamanho** do pacote com .npmignore
 - 🔧 **Padronização do processo** de release
 
-## [1.1.0] - 2024-12-25
+## [1.1.0] - 2025-06-25
 
 ### Added
 - ✨ **Arquitetura de testes refatorada**: Testes individuais e atômicos
@@ -66,7 +66,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - 🔧 **100% de sucesso** em todos os testes
 - 🔧 **Cobertura completa** de funcionalidades
 
-## [1.0.0] - 2024-12-24
+## [1.0.0] - 2025-06-20
 
 ### Added
 - 🎉 **Versão inicial** do MCP Dev Utils
