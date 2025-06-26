@@ -2,9 +2,19 @@
 
 Ferramentas úteis para desenvolvedores via MCP - Arquitetura modular e extensível
 
+## Pré-requisitos
+
+- **Node.js 20+** - Versão mínima necessária para execução
+- **Visibilidade Global** - Para IDEs da JetBrains, certifique-se que Node.js, npm e npx estejam disponíveis globalmente:
+  - `/usr/local/bin/node`
+  - `/usr/local/bin/npm`
+  - `/usr/local/bin/npx`
+
 ## Configuração
 
 Para usar com assistentes de IA em IDEs como **Cursor**, **VS Code**, **Augment Code**, **Claude Desktop** e outros que suportam MCP.
+
+### Configuração Padrão
 
 Adicione no arquivo de configuração MCP da sua IDE:
 
@@ -14,6 +24,21 @@ Adicione no arquivo de configuração MCP da sua IDE:
     "dev-tools": {
       "command": "npx",
       "args": ["-y", "mcp-dev-tools@latest"]
+    }
+  }
+}
+```
+
+### Windows com WSL
+
+Para usuários do Windows com WSL, a configuração pode precisar ser:
+
+```json
+{
+  "mcpServers": {
+    "dev-utils": {
+      "command": "wsl",
+      "args": ["npx", "-y", "mcp-dev-utils"]
     }
   }
 }
@@ -225,7 +250,7 @@ Contribuições são bem-vindas! Veja o [guia de contribuição](docs/CONTRIBUTI
 - Processo de submissão de PRs
 - Como adicionar novas ferramentas
 
-**Requisitos:** Node.js 18+
+**Requisitos:** Node.js 20+
 
 ## Licença
 
