@@ -8,6 +8,9 @@ const { runAgeCalculatorTests } = require('./tools/age-calculator.test');
 const { runCpfUtilsTests } = require('./tools/cpf-utils.test');
 const { runCnpjUtilsTests } = require('./tools/cnpj-utils.test');
 const { runPasswordUtilsTests } = require('./tools/password-utils.test');
+const { runCreditCardUtilsTests } = require('./tools/credit-card-utils.test');
+const { runDateUtilsTests } = require('./tools/date-utils.test');
+const { runCompetenciaUtilsTests } = require('./tools/competencia-utils.test');
 
 async function runAllToolsTests() {
   console.log('🧪 EXECUTANDO TESTES DAS FERRAMENTAS INDIVIDUAIS\n');
@@ -39,9 +42,18 @@ async function runAllToolsTests() {
     await runPasswordUtilsTests();
     console.log('');
 
+    await runCreditCardUtilsTests();
+    console.log('');
+
+    await runDateUtilsTests();
+    console.log('');
+
+    await runCompetenciaUtilsTests();
+    console.log('');
+
     console.log('=' .repeat(60));
     console.log('🎉 TODOS OS TESTES DAS FERRAMENTAS PASSARAM!');
-    console.log('✅ 8 ferramentas testadas individualmente');
+    console.log('✅ 11 ferramentas testadas individualmente');
     console.log('✅ Atomicidade e isolamento garantidos');
     console.log('=' .repeat(60));
 

@@ -6,6 +6,9 @@ const ageCalculator = require('./age-calculator');
 const cpfUtils = require('./cpf-utils');
 const cnpjUtils = require('./cnpj-utils');
 const passwordUtils = require('./password-utils');
+const creditCardUtils = require('./credit-card-utils');
+const dateUtils = require('./date-utils');
+const competenciaUtils = require('./competencia-utils');
 
 module.exports = {
   uuidGenerator,
@@ -15,5 +18,8 @@ module.exports = {
   ageCalculator,
   cpfUtils,
   cnpjUtils,
-  passwordUtils
+  passwordUtils,
+  creditCardUtils,
+  dateUtils,
+  competenciaUtils
 };

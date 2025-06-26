@@ -5,6 +5,57 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2025-06-26
+
+### Added
+- ✨ **2 novas ferramentas temporais**:
+  - 📅 **Date Utils**: Operações completas com datas, horários e timestamps
+    - 🔧 Geração: Timestamps, datas aleatórias, sequências, dias úteis
+    - ✅ Validação: Formatos múltiplos, intervalos, dias úteis, feriados
+    - 🔄 Conversão: Entre formatos, fusos horários, timestamps, relativos
+    - 🧮 Cálculos: Diferenças, idade, adição/subtração, próximo dia útil
+    - 🎨 Formatação: Extenso, customizado, relativo, localizado
+    - 📊 Análise: Informações completas, estatísticas, padrões
+  - 📊 **Competência Utils**: Períodos contábeis/fiscais brasileiros (MM/YYYY, MM/YY, YY-MM)
+    - 🔧 Geração: Últimos/próximos meses, sequências, trimestres, exercícios fiscais
+    - ✅ Validação: Formatos múltiplos, intervalos, sequências lógicas
+    - 🔄 Conversão: Entre formatos, normalização, timestamps, datas de início/fim
+    - 🧮 Cálculos: Diferenças em meses, adição/subtração, trimestres, dias na competência
+    - 🎨 Formatação: Extenso, abreviado, customizado, fiscal
+    - 📊 Análise: Informações fiscais, vencimentos tributários, estatísticas
+- ✨ **Especialização brasileira**:
+  - 🇧🇷 **Calendário fiscal**: Vencimentos ICMS, ISS, PIS/COFINS, IRPJ/CSLL, Simples Nacional
+  - 🇧🇷 **Feriados nacionais**: Integração com feriados brasileiros
+  - 🇧🇷 **Interpretação inteligente**: Anos YY com regras configuráveis (24=2024, 99=1999)
+  - 🇧🇷 **Formatos contábeis**: Suporte completo a MM/YYYY, MM/YY, YY-MM
+- ✨ **Funcionalidades avançadas**:
+  - ⏰ **Operações temporais**: 6 operações por ferramenta (gerar, validar, converter, calcular, formatar, analisar)
+  - 📈 **Processamento em lote**: Até 100 datas/competências por operação
+  - 🎯 **Casos de uso reais**: Sistemas contábeis, fiscais, ERP, migração de dados
+
+### Changed
+- 🔄 **README.md otimizado**: Documentação menos redundante e mais legível
+  - 📝 Seção de ferramentas com um exemplo por linha (melhor legibilidade)
+  - 📝 Casos de uso expandidos com comandos individuais
+  - 📝 Remoção de redundâncias e números específicos de ferramentas
+  - 📝 Configuração atualizada com contexto de uso em IDEs com IA
+- 🔄 **Estrutura do projeto**: Integração perfeita das novas ferramentas
+- 🔄 **Testes atualizados**: Cobertura completa para 11 ferramentas
+
+### Improved
+- ⚡ **Cobertura temporal completa**: Datas gerais + competências fiscais brasileiras
+- ⚡ **Workflows profissionais**: Ferramentas especializadas para desenvolvimento brasileiro
+- ⚡ **Documentação superior**: Exemplos práticos e casos de uso específicos
+- ⚡ **Experiência do usuário**: Configuração clara para uso com assistentes de IA
+
+### Technical
+- 🔧 **11 ferramentas totais**: UUID, Email, Hash, JSON, Idade, CPF, CNPJ, Senhas, Cartões, Datas, Competências
+- 🔧 **2.300+ linhas de código**: Implementação robusta das ferramentas temporais
+- 🔧 **55 testes individuais**: Cobertura completa das novas funcionalidades
+- 🔧 **Arquitetura consistente**: Padrão unificado mantido para todas as ferramentas
+- 🔧 **Zero breaking changes**: Compatibilidade total com versões anteriores
+- 🔧 **Exemplo completo atualizado**: Demonstração usando todas as 11 ferramentas
+
 ## [1.2.0] - 2025-06-26
 
 ### Added

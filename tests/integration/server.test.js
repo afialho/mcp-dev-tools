@@ -8,10 +8,10 @@ async function testServerInitialization() {
   const server = new DevUtilsServer();
 
   assert(server.toolRegistry, 'ToolRegistry deve estar inicializado');
-  assert.strictEqual(server.toolRegistry.getToolCount(), 8, 'Deve ter 8 ferramentas');
+  assert.strictEqual(server.toolRegistry.getToolCount(), 11, 'Deve ter 11 ferramentas');
 
   const toolNames = server.toolRegistry.getToolNames();
-  const expectedTools = ['gerar_uuid', 'email_utils', 'gerar_hash', 'formatar_json', 'calcular_idade', 'cpf_utils', 'cnpj_utils', 'password_utils'];
+  const expectedTools = ['gerar_uuid', 'email_utils', 'gerar_hash', 'formatar_json', 'calcular_idade', 'cpf_utils', 'cnpj_utils', 'password_utils', 'credit_card_utils', 'date_utils', 'competencia_utils'];
 
   for (const tool of expectedTools) {
     assert(toolNames.includes(tool), `Ferramenta ${tool} deve estar disponível`);
@@ -44,7 +44,7 @@ async function testServerSchemas() {
   const server = new DevUtilsServer();
   const schemas = server.toolRegistry.getToolSchemas();
 
-  assert.strictEqual(schemas.length, 8, 'Deve ter 8 schemas');
+  assert.strictEqual(schemas.length, 11, 'Deve ter 11 schemas');
 
   // Validar schema específico do UUID
   const uuidSchema = schemas.find(s => s.name === 'gerar_uuid');
