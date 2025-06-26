@@ -7,7 +7,7 @@ const jsonUtilsTool = {
       operacao: {
         type: 'string',
         description: 'Operação: formatar JSON, validar estrutura, converter dados para JSON, analisar conteúdo, extrair valores ou comparar JSONs',
-        enum: ['formatar', 'validar', 'converter', 'analisar', 'extrair', 'comparar', 'gerar_schema', 'minificar']
+        enum: ['formatar', 'validar', 'converter', 'analisar', 'extrair', 'comparar', 'gerar_schema', 'minificar', 'gerar', 'criar']
       },
       
       // Para formatação e validação
@@ -85,16 +85,21 @@ const jsonUtilsTool = {
         description: 'Formato de saída do resultado',
         enum: ['json', 'texto', 'tabela'],
         default: 'json'
+      },
+      auto_display_markdown: {
+        type: 'boolean',
+        description: 'Automaticamente exibir JSON em markdown quando apropriado',
+        default: true
       }
     },
     required: ['operacao']
   },
   
   async execute(args) {
-    const { 
-      operacao, 
-      json_string, 
-      indentacao = 2, 
+    const {
+      operacao,
+      json_string,
+      indentacao = 2,
       ordenar_chaves = false,
       dados_entrada,
       formato_origem = 'auto',
@@ -105,7 +110,8 @@ const jsonUtilsTool = {
       json_comparacao,
       jsons,
       incluir_tipos = false,
-      formato_saida = 'json'
+      formato_saida = 'json',
+      auto_display_markdown = true
     } = args;
 
     try {
@@ -148,13 +154,27 @@ const jsonUtilsTool = {
           throw new Error(`Operação '${operacao}' não suportada`);
       }
       
-      return {
-        content: [
-          {
+      // Preparar resposta com auto-display de JSON quando apropriado
+      const respostaContent = [
+        {
+          type: 'text',
+          text: resultado
+        }
+      ];
+
+      // Detectar e adicionar JSON em markdown se necessário
+      if (auto_display_markdown) {
+        const jsonMarkdown = this.extrairJsonParaMarkdown(resultado, operacao);
+        if (jsonMarkdown) {
+          respostaContent.push({
             type: 'text',
-            text: resultado
-          }
-        ]
+            text: jsonMarkdown
+          });
+        }
+      }
+
+      return {
+        content: respostaContent
       };
       
     } catch (error) {
@@ -563,6 +583,37 @@ const jsonUtilsTool = {
       return `Posição ${match[1]}`;
     }
     return 'Posição não identificada';
+  },
+
+  // Método para extrair JSON e criar markdown automático
+  extrairJsonParaMarkdown(resultado, operacao) {
+    // Operações que devem sempre exibir JSON em markdown
+    const operacoesJson = ['formatar', 'converter', 'gerar_schema', 'minificar'];
+
+    if (!operacoesJson.includes(operacao)) {
+      return null;
+    }
+
+    // Extrair JSON dos blocos de código
+    const regexJson = /```json\n([\s\S]*?)\n```/g;
+    const matches = [...resultado.matchAll(regexJson)];
+
+    if (matches.length === 0) {
+      return null;
+    }
+
+    // Pegar o primeiro JSON encontrado (geralmente é o principal)
+    const jsonContent = matches[0][1];
+
+    // Verificar se é JSON válido
+    try {
+      JSON.parse(jsonContent);
+      // Retornar JSON em markdown puro (sem blocos da ferramenta)
+      return `\`\`\`json\n${jsonContent}\n\`\`\``;
+    } catch (error) {
+      // Se não for JSON válido, não retornar nada
+      return null;
+    }
   }
 };
 
