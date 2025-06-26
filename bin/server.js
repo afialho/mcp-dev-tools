@@ -10,13 +10,13 @@ const {
 } = require('@modelcontextprotocol/sdk/types.js');
 const ToolRegistry = require('../utils/tool-registry.js');
 
-class DevUtilsServer {
+class DevToolsServer {
   constructor() {
     const packageJson = require('../package.json');
 
     this.server = new Server(
       {
-        name: 'dev-utils-server',
+        name: 'dev-tools-server',
         version: packageJson.version,
       },
       {
@@ -75,15 +75,15 @@ class DevUtilsServer {
     await this.server.connect(transport);
 
     const packageJson = require('../package.json');
-    console.error(`🚀 MCP Dev Utils Server v${packageJson.version} iniciado!`);
+    console.error(`🚀 MCP Dev Tools Server v${packageJson.version} iniciado!`);
     console.error(`📦 Ferramentas carregadas: ${this.toolRegistry.getToolCount()}`);
   }
 }
 
 // Iniciar o servidor
 if (require.main === module) {
-  const server = new DevUtilsServer();
+  const server = new DevToolsServer();
   server.run().catch(console.error);
 }
 
-module.exports = DevUtilsServer;
+module.exports = DevToolsServer;

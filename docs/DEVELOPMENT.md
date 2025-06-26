@@ -3,8 +3,8 @@
 ## Setup
 
 ```bash
-git clone https://github.com/afialho/mcp-dev-utils.git
-cd mcp-dev-utils
+git clone https://github.com/afialho/mcp-dev-tools.git
+cd mcp-dev-tools
 npm install
 npm test
 ```

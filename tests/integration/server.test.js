@@ -1,11 +1,11 @@
-const DevUtilsServer = require('../../bin/server');
+const DevToolsServer = require('../../bin/server');
 const { validateMcpResponse } = require('../helpers/test-utils');
 const assert = require('assert');
 
 async function testServerInitialization() {
   console.log('🧪 Testando inicialização do servidor...');
 
-  const server = new DevUtilsServer();
+  const server = new DevToolsServer();
 
   assert(server.toolRegistry, 'ToolRegistry deve estar inicializado');
   assert.strictEqual(server.toolRegistry.getToolCount(), 11, 'Deve ter 11 ferramentas');
@@ -23,7 +23,7 @@ async function testServerInitialization() {
 async function testServerToolExecution() {
   console.log('🧪 Testando execução via servidor...');
 
-  const server = new DevUtilsServer();
+  const server = new DevToolsServer();
 
   // Teste UUID via servidor
   const uuidResult = await server.toolRegistry.executeTool('gerar_uuid', { versao: 'v4', quantidade: 1 });
@@ -41,7 +41,7 @@ async function testServerToolExecution() {
 async function testServerSchemas() {
   console.log('🧪 Testando schemas do servidor...');
 
-  const server = new DevUtilsServer();
+  const server = new DevToolsServer();
   const schemas = server.toolRegistry.getToolSchemas();
 
   assert.strictEqual(schemas.length, 11, 'Deve ter 11 schemas');

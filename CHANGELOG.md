@@ -5,6 +5,23 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.1] - 2025-06-26
+
+### Changed
+- 🔄 **Renomeação do projeto**: `mcp-dev-utils` → `mcp-dev-tools`
+  - 📦 Nome do pacote NPM atualizado
+  - 🔗 URLs do repositório GitHub atualizadas
+  - 📋 Comando binário alterado: `mcp-dev-utils` → `mcp-dev-tools`
+  - 📚 Documentação completamente atualizada
+  - ⚙️ Scripts de configuração atualizados
+
+### Technical
+- 🔧 **package.json**: Nome, binário e URLs atualizados
+- 🔧 **package-lock.json**: Referências internas sincronizadas
+- 🔧 **Documentação**: README, DEVELOPMENT e CONTRIBUTING atualizados
+- 🔧 **Scripts**: configure.js atualizado com novo nome
+- 🔧 **Servidor**: Mensagens de log atualizadas
+
 ## [1.3.0] - 2025-06-26
 
 ### Added
@@ -186,7 +203,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [1.0.0] - 2025-06-20
 
 ### Added
-- 🎉 **Versão inicial** do MCP Dev Utils
+- 🎉 **Versão inicial** do MCP Dev Tools
 - ⚡ **5 ferramentas essenciais**:
   - UUID Generator (v4 e v1)
   - Email Validator

@@ -1,4 +1,4 @@
-# MCP Dev Utils
+# MCP Dev Tools
 
 Ferramentas úteis para desenvolvedores via MCP - Arquitetura modular e extensível
 
@@ -11,9 +11,9 @@ Adicione no arquivo de configuração MCP da sua IDE:
 ```json
 {
   "mcpServers": {
-    "dev-utils": {
+    "dev-tools": {
       "command": "npx",
-      "args": ["-y", "mcp-dev-utils@latest"]
+      "args": ["-y", "mcp-dev-tools@latest"]
     }
   }
 }

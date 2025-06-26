@@ -1,2 +1,2 @@
-const DevUtilsServer = require('./bin/server.js');
-module.exports = DevUtilsServer;
+const DevToolsServer = require('./bin/server.js');
+module.exports = DevToolsServer;

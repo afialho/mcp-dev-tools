@@ -7,8 +7,8 @@ const { execSync } = require('child_process');
 
 class MCPConfigurator {
   constructor() {
-    this.packageName = 'mcp-dev-utils';
-    this.serverName = 'mcp-dev-utils';
+    this.packageName = 'mcp-dev-tools';
+    this.serverName = 'mcp-dev-tools';
     this.binaryName = 'mcp-dev-server';
   }
 
@@ -244,7 +244,7 @@ class MCPConfigurator {
   }
 
   run() {
-    console.log('🚀 Configurando MCP Dev Utils para Augment Code...\n');
+    console.log('🚀 Configurando MCP Dev Tools para Augment Code...\n');
 
     const vsCodeConfigured = this.configureVSCode();
     const jetbrainsConfigured = this.configurePyCharm();
@@ -259,7 +259,7 @@ class MCPConfigurator {
     }
 
     console.log('\n📚 Para reconfigurar: mcp-dev-configure');
-    console.log('🐛 Issues: https://github.com/afialho/mcp-dev-utils/issues');
+    console.log('🐛 Issues: https://github.com/afialho/mcp-dev-tools/issues');
   }
 }
 
