@@ -5,6 +5,32 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.2] - 2025-06-26
+
+### Changed
+- 📚 **Consolidação radical da documentação**: Redução de 84% no conteúdo
+- 🔄 **Estrutura simplificada**: 4 arquivos (1.330 linhas) → 2 arquivos (208 linhas)
+- 📁 **Nova organização**: docs/DEVELOPMENT.md + docs/CONTRIBUTING.md apenas
+- 🗑️ **Remoção de redundâncias**: Eliminação completa de informações duplicadas
+
+### Removed
+- ❌ **docs/TESTING.md**: Consolidado em DEVELOPMENT.md
+- ❌ **docs/PUBLISHING.md**: Consolidado em CONTRIBUTING.md
+- ❌ **Conteúdo verboso**: Teoria desnecessária e exemplos excessivos
+- ❌ **Informações históricas**: Detalhes sobre refatoração removidos
+
+### Improved
+- ⚡ **Documentação ultra-enxuta**: Foco apenas no essencial
+- ⚡ **Experiência do desenvolvedor**: Informações encontradas rapidamente
+- ⚡ **Manutenção simplificada**: 84% menos conteúdo para manter
+- ⚡ **Organização profissional**: Seguindo padrões de projetos como React/Vue.js
+
+### Technical
+- 🔧 **DEVELOPMENT.md**: 118 linhas (Setup, Arquitetura, Ferramentas, Testes)
+- 🔧 **CONTRIBUTING.md**: 90 linhas (Contribuição, Publicação, Padrões)
+- 🔧 **Zero redundância**: Cada informação em local único
+- 🔧 **Foco prático**: Comandos e exemplos diretos
+
 ## [1.1.1] - 2025-06-25
 
 ### Added
