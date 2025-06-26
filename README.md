@@ -130,6 +130,40 @@ Para usuários do Windows com WSL, a configuração pode precisar ser:
 - `"Gere sequência de 01/2024 até 06/2024"`
 - `"Converta 03/2024 para primeiro e último dia do mês"`
 
+### 🔐 **Base64** - Codificação e decodificação de dados
+- `"Codifique texto: Olá mundo! para Base64"`
+- `"Decodifique Base64: SGVsbG8gV29ybGQh para texto"`
+- `"Codifique múltiplos textos: Hello, World, Test"`
+- `"Decodifique múltiplos Base64 com estatísticas"`
+- `"Codifique para Base64 URL-safe: dados+especiais/teste="`
+- `"Decodifique Base64 URL-safe: SGVsbG8tV29ybGQ"`
+- `"Valide strings Base64: SGVsbG8=, invalid!@#, dGVzdA=="`
+- `"Analise eficiência de codificação Base64"`
+- `"Formate Base64 com quebras de linha (76 caracteres)"`
+- `"Detecte tipo de Base64: padrão, URL-safe ou inválido"`
+
+### 📱 **QR Code** - Geração de códigos QR
+- `"Gere QR Code para URL: https://github.com/afialho/mcp-dev-tools"`
+- `"Crie QR Code para email: contato@empresa.com"`
+- `"Gere QR Code para telefone: +5511999999999"`
+- `"Crie QR Code para WiFi: MinhaRede,MinhaSenh@123,WPA2"`
+- `"Gere QR Code vCard: João Silva,+5511999999999,joao@example.com"`
+- `"Crie QR Code em formato PNG Base64 para texto: Olá mundo"`
+- `"Gere QR Code SVG com correção de erro alta para: Dados importantes"`
+
+### 📄 **XML** - Manipulação completa de documentos XML
+- `"Formate XML: <root><pessoa nome='João'><idade>30</idade></pessoa></root>"`
+- `"Minifique XML e calcule redução de tamanho"`
+- `"Valide sintaxe XML e analise estrutura"`
+- `"Converta XML para JSON preservando atributos"`
+- `"Converta JSON para XML com elemento raiz personalizado"`
+- `"Extraia valores com XPath: //pessoa/@nome, //idade"`
+- `"Analise estrutura XML: elementos, atributos, profundidade, namespaces"`
+- `"Escape caracteres especiais: <tag> & 'texto' para XML"`
+- `"Desescape entidades XML: &lt;tag&gt; &amp; &apos;texto&apos;"`
+- `"Compare dois XMLs e identifique diferenças estruturais"`
+- `"Gere schema XSD básico a partir da estrutura XML"`
+
 ## Workflows Completos
 
 ### 👤 **Perfil de Usuário**
@@ -162,11 +196,21 @@ Para usuários do Windows com WSL, a configuração pode precisar ser:
 "Dados teste: gere 5 CPFs, 3 CNPJs, 10 emails aleatórios, senhas variadas, cartões de teste, UUIDs únicos"
 ```
 
+### 📄 **Processamento XML**
+```
+"Processe XML: valide estrutura do arquivo config.xml, extraia configurações com XPath //database/@host, converta para JSON, compare com backup.xml, gere schema XSD"
+```
+
+### 🔐 **Codificação de Dados**
+```
+"Codifique dados: converta 'dados confidenciais' para Base64, valide resultado, analise eficiência, decodifique para verificação, formate com quebras de linha"
+```
+
 ### 🎯 **EXEMPLO COMPLETO - Todas as Ferramentas**
 
 **Comando:**
 ```
-"Cadastro completo: gere UUID para ID da empresa, crie CNPJ válido para registro, gere CPF válido para representante legal com um nome fake, crie um email de contato para a empresa Tech XPTO, gere senha forte para acesso administrativo, analise força da senha criada, crie hash SHA256 da senha para armazenamento, calcule idade do representante nascido em 21/11/1980, gere timestamp atual para data de cadastro, gere competência para 3 meses à frente da competencia atual para período de ativação, gere cartão de crédito corporativo Mastercard com CVV e data futura e use a ferramenta JSON para estruturar todos estes dados em formato organizado por categorias"
+"Cadastro completo: gere UUID para ID da empresa, crie CNPJ válido para registro, gere CPF válido para representante legal, crie email de contato para empresa Tech XPTO, gere senha forte para acesso administrativo, analise força da senha criada, crie hash SHA256 da senha para armazenamento, calcule idade do representante nascido em 21/11/1980, gere timestamp atual para data de cadastro, gere competência para 3 meses à frente da competencia atual para período de ativação, gere cartão de crédito corporativo Mastercard com CVV e data futura, codifique a senha em Base64 para transmissão segura, converta todos estes dados para XML estruturado com elemento raiz 'empresa', gere QR Code com os dados da empresa e depois use a ferramenta JSON para converter o XML em formato JSON organizado por categorias"
 ```
 
 **Resultado esperado (estruturado pela ferramenta JSON):**
@@ -203,7 +247,7 @@ Para usuários do Windows com WSL, a configuração pode precisar ser:
 }
 ```
 
-✅ **Demonstração prática:** Todas as ferramentas trabalhando em conjunto!
+✅ **Demonstração prática:** Todas as 14 ferramentas trabalhando em conjunto!
 
 ## Casos de Uso
 

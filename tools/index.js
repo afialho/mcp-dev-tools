@@ -9,6 +9,8 @@ const passwordUtils = require('./password-utils');
 const creditCardUtils = require('./credit-card-utils');
 const dateUtils = require('./date-utils');
 const competenciaUtils = require('./competencia-utils');
+const base64Utils = require('./base64-utils');
+const xmlUtils = require('./xml-utils');
 
 module.exports = {
   uuidGenerator,
@@ -21,5 +23,7 @@ module.exports = {
   passwordUtils,
   creditCardUtils,
   dateUtils,
-  competenciaUtils
+  competenciaUtils,
+  base64Utils,
+  xmlUtils
 };

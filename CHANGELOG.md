@@ -5,6 +5,33 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.0] - 2025-06-26
+
+### Added
+- ✨ **XML Utils - Ferramenta XML Completa**: Nova ferramenta para manipulação completa de documentos XML
+  - 🔧 **9 operações principais**: formatar, minificar, validar, converter, extrair, analisar, escapar, comparar, gerar_schema
+  - 🎨 **Formatação profissional**: XML beautifier com indentação customizável (2-8 espaços)
+  - 🗜️ **Minificação inteligente**: Compressão com cálculo de redução de tamanho
+  - ✅ **Validação robusta**: Verificação de sintaxe XML e estrutura com relatórios detalhados
+  - 🔄 **Conversão bidirecional**: XML ↔ JSON com preservação de atributos e estrutura
+  - 🔍 **Extração XPath**: Suporte a XPath simplificado para elementos e atributos (//elemento, //elemento/@atributo)
+  - 📊 **Análise estrutural**: Estatísticas completas (elementos, atributos, profundidade, namespaces, comentários)
+  - 🔒 **Escape/Unescape**: Tratamento seguro de caracteres especiais XML (&, <, >, ", ')
+  - 🔍 **Comparação estrutural**: Identificação de diferenças entre XMLs com relatórios detalhados
+  - 📋 **Geração de Schema**: Criação automática de XSD básico com inferência de tipos
+  - 🎯 **Auto-display**: XML formatado exibido automaticamente em markdown para melhor visualização
+  - 🛡️ **Tratamento de erros**: Mensagens informativas com dicas de correção
+- 📦 **Dependências XML**: Adicionadas bibliotecas especializadas
+  - `xml2js`: Parser e builder XML robusto
+  - `xmlbuilder2`: Construção e formatação avançada de XML
+
+### Technical
+- 🧪 **Testes completos**: 11 cenários de teste cobrindo todas as operações XML
+- 📚 **Documentação atualizada**: README.md com 11 exemplos de uso da ferramenta XML
+- 🔄 **Integração perfeita**: Ferramenta integrada ao sistema de carregamento automático
+- ✅ **Compatibilidade total**: Mantém 100% de compatibilidade com ferramentas existentes
+- 📈 **Estatísticas atualizadas**: Projeto agora com 14 ferramentas especializadas
+
 ## [1.4.0] - 2025-06-26
 
 ### Added

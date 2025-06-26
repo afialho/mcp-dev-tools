@@ -11,6 +11,9 @@ const { runPasswordUtilsTests } = require('./tools/password-utils.test');
 const { runCreditCardUtilsTests } = require('./tools/credit-card-utils.test');
 const { runDateUtilsTests } = require('./tools/date-utils.test');
 const { runCompetenciaUtilsTests } = require('./tools/competencia-utils.test');
+const { runBase64UtilsTests } = require('./tools/base64-utils.test');
+const { runQRCodeUtilsTests } = require('./tools/qr-code-utils.test');
+const { runXmlUtilsTests } = require('./tools/xml-utils.test');
 
 async function runAllToolsTests() {
   console.log('🧪 EXECUTANDO TESTES DAS FERRAMENTAS INDIVIDUAIS\n');
@@ -51,9 +54,18 @@ async function runAllToolsTests() {
     await runCompetenciaUtilsTests();
     console.log('');
 
+    await runBase64UtilsTests();
+    console.log('');
+
+    await runQRCodeUtilsTests();
+    console.log('');
+
+    await runXmlUtilsTests();
+    console.log('');
+
     console.log('=' .repeat(60));
     console.log('🎉 TODOS OS TESTES DAS FERRAMENTAS PASSARAM!');
-    console.log('✅ 11 ferramentas testadas individualmente');
+    console.log('✅ 14 ferramentas testadas individualmente');
     console.log('✅ Atomicidade e isolamento garantidos');
     console.log('=' .repeat(60));
 
