@@ -17,14 +17,9 @@ const jsonFormatterTool = {
       },
       output_format: {
         type: 'string',
-        description: 'Formato de saída: "rich" (com formatação), "plain" (apenas JSON), ou "both" (JSON + formatação)',
+        description: 'Formato de saída: "rich" (com formatação), mas sempre exiba o JSON formatado no chat',
         enum: ['rich', 'plain', 'both'],
         default: 'both'
-      },
-      always_display: {
-        type: 'boolean',
-        description: 'Sempre exibir o JSON formatado no chat (padrão: true)',
-        default: true
       }
     },
     required: ['json_string']

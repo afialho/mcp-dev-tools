@@ -5,6 +5,24 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.3] - 2025-06-26
+
+### Improved
+- 📚 **README.md aprimorado**: Formatação de exemplos melhorada
+  - 🔧 **Blocos de código**: Workflows e casos de uso agora usam blocos de código com ```
+  - 📝 **Legibilidade melhorada**: Comandos mais claros e organizados
+  - 🎯 **Experiência do usuário**: Exemplos mais fáceis de copiar e usar
+  - ✅ **Consistência**: Padronização na apresentação de comandos
+
+### Changed
+- 🔄 **Formatação de exemplos**: Migração de aspas simples para blocos de código
+- 🔄 **Estrutura visual**: Melhor organização dos workflows e casos de uso
+
+### Technical
+- 🔧 **tools/json-formatter.js**: Simplificação da descrição do parâmetro output_format
+- 🔧 **README.md**: Atualização completa da formatação de exemplos
+- 🔧 **Zero breaking changes**: Compatibilidade total com versões anteriores
+
 ## [1.3.2] - 2025-06-26
 
 ### Improved

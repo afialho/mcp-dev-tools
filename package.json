@@ -1,6 +1,6 @@
 {
   "name": "mcp-dev-tools",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Ferramentas úteis para desenvolvedores via MCP",
   "main": "bin/server.js",
   "bin": {

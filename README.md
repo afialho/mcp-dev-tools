@@ -103,28 +103,40 @@ Adicione no arquivo de configuração MCP da sua IDE:
 ## Workflows Completos
 
 ### 👤 **Perfil de Usuário**
-`"Crie perfil: gere UUID para ID, valide email admin@test.com, hash da senha 'pass123', calcule idade para 15/03/1990, formate em JSON"`
+```
+"Crie perfil: gere UUID para ID, valide email admin@test.com, hash da senha 'pass123', calcule idade para 15/03/1990, formate em JSON"
+```
 
 ### 🏢 **Cadastro Empresarial**
-`"Cadastro empresa: gere CNPJ válido, valide email contato@empresa.com, crie UUID, hash da senha administrativa, formate dados em JSON"`
+```
+"Cadastro empresa: gere CNPJ válido, valide email contato@empresa.com, crie UUID, hash da senha administrativa, formate dados em JSON"
+```
 
 ### 🇧🇷 **Sistema Brasileiro**
-`"Sistema nacional: gere 3 CPFs, 2 CNPJs, valide emails gov.br, calcule idades para 01/01/1980 e 15/06/1995"`
+```
+"Sistema nacional: gere 3 CPFs, 2 CNPJs, valide emails gov.br, calcule idades para 01/01/1980 e 15/06/1995"
+```
 
 ### 🔐 **Segurança e Autenticação**
-`"Setup segurança: gere senha forte, analise força, crie hash SHA256, gere UUID para sessão, verifique vazamentos"`
+```
+"Setup segurança: gere senha forte, analise força, crie hash SHA256, gere UUID para sessão, verifique vazamentos"
+```
 
 ### 📊 **Processamento de Dados**
-`"Processe dados: extraia emails do texto, valide CPFs encontrados, formate em JSON, gere UUIDs para registros"`
+```
+"Processe dados: extraia emails do texto, valide CPFs encontrados, formate em JSON, gere UUIDs para registros"
+```
 
 ### 🧪 **Ambiente de Testes**
-`"Dados teste: gere 5 CPFs, 3 CNPJs, 10 emails aleatórios, senhas variadas, cartões de teste, UUIDs únicos"`
+```
+"Dados teste: gere 5 CPFs, 3 CNPJs, 10 emails aleatórios, senhas variadas, cartões de teste, UUIDs únicos"
+```
 
 ### 🎯 **EXEMPLO COMPLETO - Todas as Ferramentas**
 
 **Comando:**
 ```
-"Sistema completo de cadastro empresarial brasileiro: gere UUID para ID da empresa, crie CNPJ válido para registro, gere CPF válido para representante legal, valide email contato@novaempresa.com.br, gere senha forte para acesso administrativo, analise força da senha criada, crie hash SHA256 da senha para armazenamento, calcule idade do representante nascido em 15/03/1985, gere timestamp atual para data de cadastro, gere competência atual para período de ativação, gere cartão de crédito corporativo Mastercard com CVV e data futura, formate todos os dados em JSON estruturado"
+"Cadastro completo: gere UUID para ID da empresa, crie CNPJ válido para registro, gere CPF válido para representante legal com um nome fake, crie um email de contato para a empresa Tech XPTO, gere senha forte para acesso administrativo, analise força da senha criada, crie hash SHA256 da senha para armazenamento, calcule idade do representante nascido em 21/11/1980, gere timestamp atual para data de cadastro, gere competência para 3 meses à frente da competencia atual para período de ativação, gere cartão de crédito corporativo Mastercard com CVV e data futura e exiba todos estes dados em JSON estruturado"
 ```
 
 **Resultado esperado:**
@@ -157,38 +169,30 @@ Adicione no arquivo de configuração MCP da sua IDE:
 
 ## Casos de Uso
 
-### 🚀 **Comandos Rápidos**
-- `"Gere UUID v4"`
-- `"Crie CPF válido"`
-- `"Gere senha forte de 16 caracteres"`
-- `"Valide email usuario@exemplo.com"`
-- `"Formate JSON: {'nome':'Ana'}"`
-- `"Gere cartão Visa com CVV"`
-
-### 🔄 **Processamento em Lote**
-- `"Gere 10 UUIDs v4"`
-- `"Valide emails: admin@test.com, user@invalid, suporte@site.org"`
-- `"Crie 5 senhas médias"`
-- `"Gere 3 CNPJs para ambiente de teste"`
-- `"Analise senhas: password, 123456, Senh@Forte2024"`
-- `"Identifique bandeiras: 4111111111111111, 5555555555554444"`
-
-### 🎯 **Casos Específicos**
-
 **Desenvolvimento de API:**
-- `"Para API de usuários: gere UUID para ID, valide email do payload, hash da senha com SHA256, formate resposta em JSON"`
+```
+"Para API de usuários: gere UUID para ID, valide email do payload, hash da senha com SHA256, formate resposta em JSON"
+```
 
 **Testes Automatizados:**
-- `"Dados para testes: 5 CPFs válidos, 3 emails de teste, senhas variadas (forte, fraca, média), UUIDs para identificadores"`
+```
+"Dados para testes: 5 CPFs válidos, 3 emails de teste, senhas variadas (forte, fraca, média), UUIDs para identificadores"
+```
 
 **E-commerce/Pagamentos:**
-- `"Sistema de pagamento: gere cartões de teste para Visa, Mastercard e Amex, valide números existentes, identifique bandeiras"`
+```
+"Sistema de pagamento: gere cartões de teste para Visa, Mastercard e Amex, valide números existentes, identifique bandeiras"
+```
 
 **Migração de Dados:**
-- `"Processe migração: extraia emails de texto, gere novos UUIDs, valide CPFs existentes, formate em JSON"`
+```
+"Processe migração: extraia emails de texto, gere novos UUIDs, valide CPFs existentes, formate em JSON"
+```
 
 **Sistemas Contábeis:**
-- `"Gere competências 2024, valide formatos MM/YY, calcule vencimentos fiscais, analise períodos de apuração"`
+```
+"Gere competências 2024, valide formatos MM/YY, calcule vencimentos fiscais, analise períodos de apuração"
+```
 
 ## Documentação
 
