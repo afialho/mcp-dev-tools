@@ -11,7 +11,7 @@ async function testServerInitialization() {
   assert.strictEqual(server.toolRegistry.getToolCount(), 11, 'Deve ter 11 ferramentas');
 
   const toolNames = server.toolRegistry.getToolNames();
-  const expectedTools = ['gerar_uuid', 'email_utils', 'gerar_hash', 'formatar_json', 'calcular_idade', 'cpf_utils', 'cnpj_utils', 'password_utils', 'credit_card_utils', 'date_utils', 'competencia_utils'];
+  const expectedTools = ['gerar_uuid', 'email_utils', 'gerar_hash', 'json_utils_dev-tools', 'calcular_idade', 'cpf_utils', 'cnpj_utils', 'password_utils', 'credit_card_utils', 'date_utils', 'competencia_utils'];
 
   for (const tool of expectedTools) {
     assert(toolNames.includes(tool), `Ferramenta ${tool} deve estar disponível`);

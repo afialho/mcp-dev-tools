@@ -3,7 +3,7 @@
 const { runUuidGeneratorTests } = require('./tools/uuid-generator.test');
 const { runEmailUtilsTests } = require('./tools/email-utils.test');
 const { runHashGeneratorTests } = require('./tools/hash-generator.test');
-const { runJsonFormatterTests } = require('./tools/json-formatter.test');
+const { runJsonUtilsTests } = require('./tools/json-utils.test');
 const { runAgeCalculatorTests } = require('./tools/age-calculator.test');
 const { runCpfUtilsTests } = require('./tools/cpf-utils.test');
 const { runCnpjUtilsTests } = require('./tools/cnpj-utils.test');
@@ -27,7 +27,7 @@ async function runAllToolsTests() {
     await runHashGeneratorTests();
     console.log('');
 
-    await runJsonFormatterTests();
+    await runJsonUtilsTests();
     console.log('');
 
     await runAgeCalculatorTests();

@@ -1,7 +1,7 @@
 const uuidGenerator = require('./uuid-generator');
 const emailUtils = require('./email-utils');
 const hashGenerator = require('./hash-generator');
-const jsonFormatter = require('./json-formatter');
+const jsonUtils = require('./json-utils');
 const ageCalculator = require('./age-calculator');
 const cpfUtils = require('./cpf-utils');
 const cnpjUtils = require('./cnpj-utils');
@@ -14,7 +14,7 @@ module.exports = {
   uuidGenerator,
   emailUtils,
   hashGenerator,
-  jsonFormatter,
+  jsonUtils,
   ageCalculator,
   cpfUtils,
   cnpjUtils,

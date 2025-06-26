@@ -38,10 +38,15 @@ Adicione no arquivo de configuração MCP da sua IDE:
 - `"MD5 do arquivo dados.txt"`
 - `"SHA1 para verificação de integridade"`
 
-### 📝 **JSON** - Formatação e validação
-- `"Formate JSON: {'nome':'João','idade':30}"`
-- `"Valide e organize com indentação 4"`
-- `"Limpe este JSON: {'api':{'key':'123','url':'test.com'}}"`
+### 📝 **JSON** - Utilitários completos para manipulação
+- `"Formate JSON: {'nome':'João','idade':30} com chaves ordenadas"`
+- `"Valide JSON e mostre estatísticas: [1,2,{'teste':true}]"`
+- `"Converta dados para JSON estruturado com template personalizado"`
+- `"Analise JSON com estatísticas: tipos, profundidade, propriedades"`
+- `"Extraia valores com JSONPath: empresa.funcionarios[0]"`
+- `"Compare dois JSONs e mostre diferenças"`
+- `"Gere schema JSON automaticamente"`
+- `"Minifique JSON e calcule redução de tamanho"`
 
 ### 🎂 **Idade** - Cálculos temporais
 - `"Calcule idade para nascimento em 1990-05-15"`
@@ -136,31 +141,39 @@ Adicione no arquivo de configuração MCP da sua IDE:
 
 **Comando:**
 ```
-"Cadastro completo: gere UUID para ID da empresa, crie CNPJ válido para registro, gere CPF válido para representante legal com um nome fake, crie um email de contato para a empresa Tech XPTO, gere senha forte para acesso administrativo, analise força da senha criada, crie hash SHA256 da senha para armazenamento, calcule idade do representante nascido em 21/11/1980, gere timestamp atual para data de cadastro, gere competência para 3 meses à frente da competencia atual para período de ativação, gere cartão de crédito corporativo Mastercard com CVV e data futura e exiba todos estes dados em JSON estruturado"
+"Cadastro completo: gere UUID para ID da empresa, crie CNPJ válido para registro, gere CPF válido para representante legal com um nome fake, crie um email de contato para a empresa Tech XPTO, gere senha forte para acesso administrativo, analise força da senha criada, crie hash SHA256 da senha para armazenamento, calcule idade do representante nascido em 21/11/1980, gere timestamp atual para data de cadastro, gere competência para 3 meses à frente da competencia atual para período de ativação, gere cartão de crédito corporativo Mastercard com CVV e data futura e use a ferramenta JSON para estruturar todos estes dados em formato organizado por categorias"
 ```
 
-**Resultado esperado:**
+**Resultado esperado (estruturado pela ferramenta JSON):**
 ```json
 {
-  "empresa_id": "d4b26815-6b34-49b8-be1d-4a847ee82443",
-  "cnpj": "19.801.123/3509-91",
-  "representante_cpf": "420.298.752-79",
-  "email": "contato@novaempresa.com.br",
-  "email_valido": true,
-  "senha_hash": "95dc1a19b34ba6208f74e7c9221d76deeb3b711c87d0c175b5690f74d07958ae",
-  "representante_idade": 40,
-  "timestamp_cadastro": 1704067200,
-  "competencia_ativacao": "01/2024",
-  "cartao_corporativo": {
-    "numero": "5555 4444 3333 2222",
-    "bandeira": "Mastercard",
-    "cvv": "123",
-    "validade": "12/2028"
+  "acesso": {
+    "forca_senha": "Muito Forte - 98/100",
+    "senha_hash": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3"
   },
-  "metadados": {
-    "senha_forca": "Muito Forte",
-    "algoritmo_hash": "SHA256",
-    "data_criacao": "2024-01-15"
+  "empresa": {
+    "cnpj": "12.345.678/0001-90",
+    "email": "contato@techxpto.com.br",
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "nome": "Tech XPTO"
+  },
+  "financeiro": {
+    "cartao_corporativo": {
+      "bandeira": "Mastercard",
+      "cvv": "123",
+      "numero": "5555-4444-3333-2222",
+      "validade": "12/29"
+    }
+  },
+  "representante_legal": {
+    "cpf": "123.456.789-09",
+    "data_nascimento": "1980-11-21",
+    "idade": 44,
+    "nome": "Carlos Eduardo Silva"
+  },
+  "sistema": {
+    "competencia_ativacao": "09/2025",
+    "data_cadastro": "2025-06-26T10:30:00Z"
   }
 }
 ```
@@ -171,12 +184,17 @@ Adicione no arquivo de configuração MCP da sua IDE:
 
 **Desenvolvimento de API:**
 ```
-"Para API de usuários: gere UUID para ID, valide email do payload, hash da senha com SHA256, formate resposta em JSON"
+"Para API de usuários: gere UUID para ID, valide email do payload, hash da senha com SHA256, estruture resposta em JSON organizado por categorias"
 ```
 
 **Testes Automatizados:**
 ```
-"Dados para testes: 5 CPFs válidos, 3 emails de teste, senhas variadas (forte, fraca, média), UUIDs para identificadores"
+"Dados para testes: 5 CPFs válidos, 3 emails de teste, senhas variadas (forte, fraca, média), UUIDs para identificadores, estruture tudo em JSON"
+```
+
+**Processamento de JSON:**
+```
+"Analise JSON complexo: extraia emails com JSONPath, valide estrutura, compare versões, gere schema automático, minifique para produção"
 ```
 
 **E-commerce/Pagamentos:**

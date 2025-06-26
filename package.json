@@ -1,6 +1,6 @@
 {
   "name": "mcp-dev-tools",
-  "version": "1.3.7",
+  "version": "1.4.0",
   "description": "Ferramentas úteis para desenvolvedores via MCP",
   "main": "bin/server.js",
   "bin": {
@@ -14,7 +14,7 @@
     "test:uuid": "node tests/tools/uuid-generator.test.js",
     "test:email": "node tests/tools/email-utils.test.js",
     "test:hash": "node tests/tools/hash-generator.test.js",
-    "test:json": "node tests/tools/json-formatter.test.js",
+    "test:json": "node tests/tools/json-utils.test.js",
     "test:age": "node tests/tools/age-calculator.test.js",
     "test:cpf": "node tests/tools/cpf-utils.test.js",
     "test:cnpj": "node tests/tools/cnpj-utils.test.js",

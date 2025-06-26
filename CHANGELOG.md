@@ -5,6 +5,57 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2025-06-26
+
+### Added
+- ✨ **JSON Utils - Ferramenta JSON Completa**: Substituição total da ferramenta JSON anterior
+  - 🔧 **8 operações principais**: formatar, validar, converter, analisar, extrair, comparar, gerar_schema, minificar
+  - 🎯 **Conversão inteligente**: Transformar dados quaisquer em JSON estruturado
+  - 📋 **Estruturas personalizadas**: Templates com placeholders `{{variavel}}` para organização automática
+  - 🔍 **JSONPath simplificado**: Extração de valores específicos com sintaxe intuitiva
+  - 📊 **Análise detalhada**: Estatísticas, tipos, profundidade, contagem de elementos
+  - 🔄 **Comparação de JSONs**: Detecção automática de diferenças entre versões
+  - 📝 **Geração de schemas**: Criação automática de JSON Schema a partir de dados
+  - 🗜️ **Minificação**: Compressão com cálculo de redução de tamanho
+  - ✅ **Validação avançada**: Verificação de estrutura com informações detalhadas
+  - 🎨 **Formatação profissional**: Indentação customizável e ordenação de chaves
+
+### Changed
+- 🔄 **JSON Formatter → JSON Utils**: Evolução completa da ferramenta JSON
+  - ❌ **Removido**: `json-formatter.js` (funcionalidade básica)
+  - ✅ **Adicionado**: `json-utils.js` (8 operações completas)
+  - 🔧 **Nome da ferramenta**: `formatar_json` → `json_utils_dev-tools`
+  - 📈 **Capacidades**: 1 operação → 8 operações especializadas
+- 🔄 **README.md atualizado**: Documentação completa da nova ferramenta JSON
+  - 📝 **Seção JSON expandida**: 8 exemplos de uso das novas funcionalidades
+  - 🎯 **Exemplo completo atualizado**: Demonstração com estruturação automática
+  - 💼 **Casos de uso ampliados**: Processamento de JSON em workflows reais
+- 🔄 **package.json**: Script de teste atualizado para nova ferramenta
+  - 🔧 **test:json**: `json-formatter.test.js` → `json-utils.test.js`
+
+### Improved
+- ⚡ **Capacidade de estruturação**: Organização automática de dados em categorias lógicas
+- ⚡ **Workflows profissionais**: Integração perfeita com outras ferramentas para criar JSONs estruturados
+- ⚡ **Experiência do usuário**: Sempre exibe resultado no chat (baseado em feedback do usuário)
+- ⚡ **Flexibilidade total**: Suporte a qualquer tipo de dado de entrada
+- ⚡ **Análise profunda**: Informações detalhadas sobre estrutura e conteúdo JSON
+
+### Technical
+- 🔧 **570 linhas de código**: Implementação robusta com 8 operações especializadas
+- 🔧 **Métodos auxiliares**: 12 funções de apoio para processamento avançado
+- 🔧 **Tratamento de erros**: Mensagens específicas e dicas de uso
+- 🔧 **Testes validados**: Cobertura completa das novas funcionalidades
+- 🔧 **Arquitetura consistente**: Mantém padrão das outras ferramentas
+- 🔧 **Zero breaking changes**: Compatibilidade total com workflows existentes
+- 🔧 **Carregamento automático**: Integração perfeita com ToolRegistry
+
+### Use Cases
+- 🎯 **Cadastros completos**: Estruturação automática de dados de múltiplas ferramentas
+- 🎯 **APIs profissionais**: Formatação e validação de payloads complexos
+- 🎯 **Análise de dados**: Extração e comparação de informações JSON
+- 🎯 **Desenvolvimento**: Geração de schemas e minificação para produção
+- 🎯 **Migração de dados**: Conversão e estruturação de formatos legados
+
 ## [1.3.4] - 2025-06-26
 
 ### Fixed
