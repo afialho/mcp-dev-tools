@@ -4,12 +4,12 @@ Este documento contém informações técnicas para desenvolvedores que desejam 
 
 ## Arquitetura
 
-O projeto foi refatorado para garantir atomicidade, manutenibilidade e facilitar o desenvolvimento:
+O projeto utiliza uma arquitetura modular que garante atomicidade, manutenibilidade e facilita o desenvolvimento:
 
 ```
 dev-utils/
 ├── bin/
-│   └── server.js           # Servidor principal MCP (refatorado)
+│   └── server.js           # Servidor principal MCP
 ├── tools/                  # Ferramentas individuais
 │   ├── index.js           # Exporta todas as ferramentas
 │   ├── uuid-generator.js  # Geração de UUIDs
@@ -33,7 +33,7 @@ dev-utils/
 ## Benefícios da Arquitetura
 
 - ✅ **Atomicidade** - Cada ferramenta é independente e testável
-- ✅ **Manutenibilidade** - Código organizado e modular (74% menos código no servidor)
+- ✅ **Manutenibilidade** - Código organizado e modular
 - ✅ **Extensibilidade** - Novas ferramentas são carregadas automaticamente
 - ✅ **Testabilidade** - Testes isolados e granulares por ferramenta
 - ✅ **Colaboração** - Desenvolvimento paralelo possível
@@ -131,7 +131,7 @@ module.exports = novaFerramentaTool;
 
 ### 2. Carregamento Automático
 
-A ferramenta será carregada automaticamente pelo ToolRegistry na próxima inicialização. Não é necessário registrar manualmente.
+A ferramenta será carregada automaticamente pelo ToolRegistry na próxima inicialização do servidor. Não é necessário registrar manualmente.
 
 ### 3. Criar Testes
 
@@ -216,37 +216,6 @@ return {
   ]
 };
 ```
-
-## Informações Técnicas
-
-### Refatoração Realizada
-
-O projeto passou por uma refatoração completa para melhorar a arquitetura:
-
-- **Antes**: 326 linhas em um único arquivo `server.js`
-- **Depois**: 84 linhas no servidor + ferramentas modulares
-- **Redução**: 74% menos código no servidor principal
-- **Resultado**: Sistema modular, testável e extensível
-
-### Compatibilidade
-
-- ✅ **100% compatível** com a versão anterior
-- ✅ **Todas as ferramentas** funcionam exatamente como antes
-- ✅ **Mesma interface MCP** - nenhuma mudança para o usuário final
-- ✅ **Performance mantida** - sem impacto na velocidade
-
-### Validação
-
-O sistema foi completamente validado com testes automatizados refatorados:
-
-- **Arquitetura Modular**: Cada ferramenta testada individualmente
-- **5 ferramentas** com testes isolados e atômicos
-- **1 utilitário** (ToolRegistry) com testes específicos
-- **1 teste de integração** do servidor completo
-- **Execução granular** possível para debugging focado
-- **100% de sucesso** em todos os testes
-- **Cobertura completa** de funcionalidades
-- **Helpers compartilhados** para evitar duplicação de código
 
 ## Debugging
 
