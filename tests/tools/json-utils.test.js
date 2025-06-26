@@ -65,20 +65,6 @@ async function runJsonUtilsTests() {
     }
 
     console.log('✅ Conversão funcionando');
-
-    // Teste com auto_display_markdown = false
-    const argsFormatacaoSemAuto = {
-      operacao: 'formatar',
-      json_string: '{"teste": "sem auto"}',
-      auto_display_markdown: false
-    };
-
-    const resultadoSemAuto = await jsonUtils.execute(argsFormatacaoSemAuto);
-    if (resultadoSemAuto.content.length !== 1) {
-      throw new Error('auto_display_markdown=false não funcionou');
-    }
-
-    console.log('✅ Parâmetro auto_display_markdown=false funcionando');
     console.log('✅ JSON Utils: Todos os testes passaram!');
 
   } catch (error) {

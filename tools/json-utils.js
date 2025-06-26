@@ -85,11 +85,6 @@ const jsonUtilsTool = {
         description: 'Formato de saída do resultado',
         enum: ['json', 'texto', 'tabela'],
         default: 'json'
-      },
-      auto_display_markdown: {
-        type: 'boolean',
-        description: 'Automaticamente exibir JSON em markdown quando apropriado',
-        default: true
       }
     },
     required: ['operacao']
@@ -110,8 +105,7 @@ const jsonUtilsTool = {
       json_comparacao,
       jsons,
       incluir_tipos = false,
-      formato_saida = 'json',
-      auto_display_markdown = true
+      formato_saida = 'json'
     } = args;
 
     try {
@@ -162,15 +156,13 @@ const jsonUtilsTool = {
         }
       ];
 
-      // Detectar e adicionar JSON em markdown se necessário
-      if (auto_display_markdown) {
-        const jsonMarkdown = this.extrairJsonParaMarkdown(resultado, operacao);
-        if (jsonMarkdown) {
-          respostaContent.push({
-            type: 'text',
-            text: jsonMarkdown
-          });
-        }
+      // Detectar e adicionar JSON em markdown automaticamente
+      const jsonMarkdown = this.extrairJsonParaMarkdown(resultado, operacao);
+      if (jsonMarkdown) {
+        respostaContent.push({
+          type: 'text',
+          text: jsonMarkdown
+        });
       }
 
       return {
@@ -587,13 +579,6 @@ const jsonUtilsTool = {
 
   // Método para extrair JSON e criar markdown automático
   extrairJsonParaMarkdown(resultado, operacao) {
-    // Operações que devem sempre exibir JSON em markdown
-    const operacoesJson = ['formatar', 'converter', 'gerar_schema', 'minificar'];
-
-    if (!operacoesJson.includes(operacao)) {
-      return null;
-    }
-
     // Extrair JSON dos blocos de código
     const regexJson = /```json\n([\s\S]*?)\n```/g;
     const matches = [...resultado.matchAll(regexJson)];
