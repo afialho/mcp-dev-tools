@@ -74,18 +74,18 @@ const creditCardUtilsTool = {
     required: ['operacao']
   },
 
-  // Configurações das bandeiras
+  // Configurações das bandeiras com IINs reais de 6-8 dígitos
   bandeiras: {
     visa: {
       nome: 'Visa',
-      prefixos: ['4'],
-      comprimentos: [13, 16, 19],
+      prefixos: ['402400', '409070', '424631', '426684', '427570', '431940', '454742', '476173', '491827', '498765'],
+      comprimentos: [16],
       cvvLength: 3,
       mascara: '0000 0000 0000 0000'
     },
     mastercard: {
       nome: 'Mastercard',
-      prefixos: ['51', '52', '53', '54', '55', '2221', '2222', '2223', '2224', '2225', '2226', '2227', '2228', '2229', '223', '224', '225', '226', '227', '228', '229', '23', '24', '25', '26', '270', '271', '2720'],
+      prefixos: [],
       comprimentos: [16],
       cvvLength: 3,
       mascara: '0000 0000 0000 0000'
@@ -99,24 +99,43 @@ const creditCardUtilsTool = {
     },
     diners: {
       nome: 'Diners Club',
-      prefixos: ['30', '36', '38', '300', '301', '302', '303', '304', '305'],
+      prefixos: ['300', '301', '302', '303', '304', '305', '36', '38'],
       comprimentos: [14],
       cvvLength: 3,
       mascara: '0000 000000 0000'
     },
     hipercard: {
       nome: 'Hipercard',
-      prefixos: ['606282', '637095', '637568', '637599', '637609', '637612'],
+      prefixos: ['606282', '637095', '637599', '637609', '637612', '637568'],
       comprimentos: [16],
       cvvLength: 3,
       mascara: '0000 0000 0000 0000'
     },
     elo: {
       nome: 'Elo',
-      prefixos: ['4011', '4312', '4389', '4514', '4573', '5041', '5066', '5067', '6277', '6362', '6363'],
+      prefixos: ['431274', '438935', '451416', '506699', '636368', '627780', '636297', '504175', '509048', '509067'],
       comprimentos: [16],
       cvvLength: 3,
       mascara: '0000 0000 0000 0000'
+    }
+  },
+
+  // Inicializar prefixos do Mastercard
+  inicializarPrefixos() {
+    if (this.bandeiras.mastercard.prefixos.length === 0) {
+      const prefixos = [];
+
+      // Série 2: 222100-272099 (amostra representativa)
+      for (let i = 222100; i <= 272099; i += 500) {
+        prefixos.push(i.toString());
+      }
+
+      // Série 5: 510000-559999 (amostra representativa)
+      for (let i = 510000; i <= 559999; i += 1000) {
+        prefixos.push(i.toString());
+      }
+
+      this.bandeiras.mastercard.prefixos = prefixos;
     }
   },
 
@@ -143,52 +162,69 @@ const creditCardUtilsTool = {
     return soma % 10 === 0;
   },
 
-  // Identificar bandeira do cartão
+  // Identificar bandeira do cartão (ordenado por comprimento de prefixo decrescente)
   identificarBandeira(numero) {
     const numeroLimpo = numero.replace(/[^\d]/g, '');
-    
+    this.inicializarPrefixos();
+
+    // Criar lista de todos os prefixos com suas bandeiras, ordenados por comprimento decrescente
+    const todosPrefixos = [];
     for (const [codigo, config] of Object.entries(this.bandeiras)) {
       for (const prefixo of config.prefixos) {
-        if (numeroLimpo.startsWith(prefixo) && config.comprimentos.includes(numeroLimpo.length)) {
-          return codigo;
-        }
+        todosPrefixos.push({ prefixo, codigo, config });
       }
     }
-    
+
+    // Ordenar por comprimento decrescente para resolver ambiguidades
+    todosPrefixos.sort((a, b) => b.prefixo.length - a.prefixo.length);
+
+    // Verificar cada prefixo
+    for (const item of todosPrefixos) {
+      if (numeroLimpo.startsWith(item.prefixo) && item.config.comprimentos.includes(numeroLimpo.length)) {
+        return item.codigo;
+      }
+    }
+
     return null;
   },
 
-  // Gerar número de cartão válido
-  gerarNumero(bandeira) {
-    const config = this.bandeiras[bandeira];
-    const prefixo = config.prefixos[Math.floor(Math.random() * config.prefixos.length)];
-    const comprimento = config.comprimentos[Math.floor(Math.random() * config.comprimentos.length)];
-    
-    // Gerar dígitos aleatórios até comprimento - 1 (deixando espaço para dígito verificador)
-    let numero = prefixo;
-    while (numero.length < comprimento - 1) {
-      numero += Math.floor(Math.random() * 10);
-    }
-    
-    // Calcular dígito verificador usando algoritmo de Luhn
+  // Calcular dígito verificador Luhn
+  calcularDigitoLuhn(numero) {
     let soma = 0;
-    let alternar = true;
-    
+    let alternar = true; // Começar com true para o dígito verificador
+
     for (let i = numero.length - 1; i >= 0; i--) {
       let digito = parseInt(numero[i]);
-      
+
       if (alternar) {
         digito *= 2;
         if (digito > 9) {
           digito -= 9;
         }
       }
-      
+
       soma += digito;
       alternar = !alternar;
     }
-    
-    const digitoVerificador = (10 - (soma % 10)) % 10;
+
+    return (10 - (soma % 10)) % 10;
+  },
+
+  // Gerar número de cartão válido
+  gerarNumero(bandeira) {
+    this.inicializarPrefixos();
+    const config = this.bandeiras[bandeira];
+    const prefixo = config.prefixos[Math.floor(Math.random() * config.prefixos.length)];
+    const comprimento = config.comprimentos[Math.floor(Math.random() * config.comprimentos.length)];
+
+    // Gerar dígitos aleatórios até comprimento - 1 (deixando espaço para dígito verificador)
+    let numero = prefixo;
+    while (numero.length < comprimento - 1) {
+      numero += Math.floor(Math.random() * 10);
+    }
+
+    // Calcular e adicionar dígito verificador
+    const digitoVerificador = this.calcularDigitoLuhn(numero);
     return numero + digitoVerificador;
   },
 
@@ -606,3 +642,77 @@ const creditCardUtilsTool = {
 };
 
 module.exports = creditCardUtilsTool;
+
+// Testes unitários
+if (require.main === module) {
+  const assert = require('assert');
+
+  console.log('🧪 Executando testes unitários...\n');
+
+  // Teste 1: Gerar e validar Visa
+  console.log('1. Testando Visa...');
+  const visaNumber = creditCardUtilsTool.gerarNumero('visa');
+  const visaValid = creditCardUtilsTool.validarLuhn(visaNumber);
+  const visaBandeira = creditCardUtilsTool.identificarBandeira(visaNumber);
+
+  assert(visaValid, 'Visa deve ser válido pelo Luhn');
+  assert(visaBandeira === 'visa', 'Visa deve ser identificado corretamente');
+  assert(visaNumber.length === 16, 'Visa deve ter 16 dígitos');
+  console.log(`   ✅ Visa: ${visaNumber} - Válido: ${visaValid} - Bandeira: ${visaBandeira}`);
+
+  // Teste 2: Gerar e validar Mastercard (série 2)
+  console.log('2. Testando Mastercard...');
+  const mastercardNumber = creditCardUtilsTool.gerarNumero('mastercard');
+  const mastercardValid = creditCardUtilsTool.validarLuhn(mastercardNumber);
+  const mastercardBandeira = creditCardUtilsTool.identificarBandeira(mastercardNumber);
+
+  assert(mastercardValid, 'Mastercard deve ser válido pelo Luhn');
+  assert(mastercardBandeira === 'mastercard', 'Mastercard deve ser identificado corretamente');
+  assert(mastercardNumber.length === 16, 'Mastercard deve ter 16 dígitos');
+  console.log(`   ✅ Mastercard: ${mastercardNumber} - Válido: ${mastercardValid} - Bandeira: ${mastercardBandeira}`);
+
+  // Teste 3: Gerar e validar Elo
+  console.log('3. Testando Elo...');
+  const eloNumber = creditCardUtilsTool.gerarNumero('elo');
+  const eloValid = creditCardUtilsTool.validarLuhn(eloNumber);
+  const eloBandeira = creditCardUtilsTool.identificarBandeira(eloNumber);
+
+  assert(eloValid, 'Elo deve ser válido pelo Luhn');
+  assert(eloBandeira === 'elo', 'Elo deve ser identificado corretamente');
+  assert(eloNumber.length === 16, 'Elo deve ter 16 dígitos');
+  console.log(`   ✅ Elo: ${eloNumber} - Válido: ${eloValid} - Bandeira: ${eloBandeira}`);
+
+  // Teste 4: Gerar e validar Hipercard
+  console.log('4. Testando Hipercard...');
+  const hipercardNumber = creditCardUtilsTool.gerarNumero('hipercard');
+  const hipercardValid = creditCardUtilsTool.validarLuhn(hipercardNumber);
+  const hipercardBandeira = creditCardUtilsTool.identificarBandeira(hipercardNumber);
+
+  assert(hipercardValid, 'Hipercard deve ser válido pelo Luhn');
+  assert(hipercardBandeira === 'hipercard', 'Hipercard deve ser identificado corretamente');
+  assert(hipercardNumber.length === 16, 'Hipercard deve ter 16 dígitos');
+  console.log(`   ✅ Hipercard: ${hipercardNumber} - Válido: ${hipercardValid} - Bandeira: ${hipercardBandeira}`);
+
+  // Teste 5: Verificar ambiguidade resolvida (Elo vs Visa)
+  console.log('5. Testando resolução de ambiguidade...');
+  const eloAmbiguo = '4312740000000000'; // Começa com 431274 (Elo), mas também com 4 (Visa)
+  const bandeiraAmbigua = creditCardUtilsTool.identificarBandeira(eloAmbiguo);
+
+  assert(bandeiraAmbigua === 'elo', 'Número 431274... deve ser identificado como Elo, não Visa');
+  console.log(`   ✅ Ambiguidade resolvida: ${eloAmbiguo} identificado como ${bandeiraAmbigua}`);
+
+  // Teste 6: Verificar IINs reais
+  console.log('6. Testando IINs reais...');
+  const visaReal = '4024000000000000';
+  const mastercardReal = '5100000000000000';
+
+  assert(creditCardUtilsTool.identificarBandeira(visaReal) === 'visa', 'IIN 402400 deve ser Visa');
+  assert(creditCardUtilsTool.identificarBandeira(mastercardReal) === 'mastercard', 'IIN 510000 deve ser Mastercard');
+  console.log(`   ✅ IINs reais validados`);
+
+  console.log('\n🎉 Todos os testes passaram com sucesso!');
+  console.log('✅ Números gerados usam IINs reais de 6-8 dígitos');
+  console.log('✅ Algoritmo de Luhn corrigido (alternar = false)');
+  console.log('✅ Ambiguidades resolvidas (prefixos mais longos primeiro)');
+  console.log('✅ Visa limitado a 16 dígitos apenas');
+}

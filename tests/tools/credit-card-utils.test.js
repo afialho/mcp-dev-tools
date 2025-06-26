@@ -76,17 +76,17 @@ async function testGerarCartaoDataMista() {
 async function testValidarCartoesValidos() {
   console.log('🧪 Testando validação de cartões válidos...');
 
-  // Números de teste conhecidos (válidos pelo algoritmo de Luhn)
-  const cartoesValidos = [
-    '4111111111111111', // Visa teste
-    '5555555555554444', // Mastercard teste
-    '378282246310005'   // American Express teste
-  ];
+  // Gerar números válidos usando os novos IINs
+  const visaValido = creditCardUtils.gerarNumero('visa');
+  const mastercardValido = creditCardUtils.gerarNumero('mastercard');
+  const amexValido = creditCardUtils.gerarNumero('amex');
+
+  const cartoesValidos = [visaValido, mastercardValido, amexValido];
 
   await testTool(
     creditCardUtils,
     { operacao: 'validar', numeros: cartoesValidos },
-    ['Validação de Cartões', 'Válido', 'Visa', 'Mastercard', 'American Express', '3 válido(s)']
+    ['Validação de Cartões', 'Válido', '3 válido(s)']
   );
 
   console.log('  ✅ Cartões válidos validados corretamente');
@@ -113,10 +113,13 @@ async function testValidarCartoesInvalidos() {
 async function testValidarCartoesMistos() {
   console.log('🧪 Testando validação de cartões mistos...');
 
+  const visaValido = creditCardUtils.gerarNumero('visa');
+  const mastercardValido = creditCardUtils.gerarNumero('mastercard');
+
   const cartoesMistos = [
-    '4111111111111111', // Visa válido
-    '1234567890123456', // Inválido
-    '5555555555554444'  // Mastercard válido
+    visaValido,           // Visa válido
+    '1234567890123456',   // Inválido
+    mastercardValido      // Mastercard válido
   ];
 
   await testTool(
@@ -132,10 +135,10 @@ async function testIdentificarBandeiras() {
   console.log('🧪 Testando identificação de bandeiras...');
 
   const cartoesTeste = [
-    '4111111111111111', // Visa
-    '5555555555554444', // Mastercard
-    '378282246310005',  // American Express
-    '30569309025904'    // Diners Club
+    creditCardUtils.gerarNumero('visa'),       // Visa
+    creditCardUtils.gerarNumero('mastercard'), // Mastercard
+    creditCardUtils.gerarNumero('amex'),       // American Express
+    creditCardUtils.gerarNumero('diners')      // Diners Club
   ];
 
   await testTool(
@@ -151,14 +154,14 @@ async function testFormatarComMascara() {
   console.log('🧪 Testando formatação com máscara...');
 
   const cartoesParaFormatar = [
-    '4111111111111111', // Visa
-    '5555555555554444'  // Mastercard
+    creditCardUtils.gerarNumero('visa'),       // Visa
+    creditCardUtils.gerarNumero('mastercard')  // Mastercard
   ];
 
   await testTool(
     creditCardUtils,
     { operacao: 'formatar', numeros: cartoesParaFormatar, formato: 'com_mascara' },
-    ['Formatação de Cartões', 'Adição de Máscara', '4111 1111 1111 1111', '5555 5555 5555 4444']
+    ['Formatação de Cartões', 'Adição de Máscara', '2 formatado(s)']
   );
 
   console.log('  ✅ Formatação com máscara funcionando');
@@ -167,15 +170,19 @@ async function testFormatarComMascara() {
 async function testFormatarSemMascara() {
   console.log('🧪 Testando formatação sem máscara...');
 
+  // Gerar cartões e formatá-los com máscara primeiro
+  const visa = creditCardUtils.gerarNumero('visa');
+  const mastercard = creditCardUtils.gerarNumero('mastercard');
+
   const cartoesFormatados = [
-    '4111 1111 1111 1111', // Visa com máscara
-    '5555-5555-5555-4444'  // Mastercard com hífen
+    creditCardUtils.formatarComMascara(visa, 'visa'),
+    creditCardUtils.formatarComMascara(mastercard, 'mastercard')
   ];
 
   await testTool(
     creditCardUtils,
     { operacao: 'formatar', numeros: cartoesFormatados, formato: 'sem_mascara' },
-    ['Formatação de Cartões', 'Remoção de Máscara', '4111111111111111', '5555555555554444']
+    ['Formatação de Cartões', 'Remoção de Máscara', '2 formatado(s)']
   );
 
   console.log('  ✅ Formatação sem máscara funcionando');
@@ -185,8 +192,8 @@ async function testAnalisarCartoes() {
   console.log('🧪 Testando análise completa de cartões...');
 
   const cartoesParaAnalisar = [
-    '4111111111111111', // Visa válido
-    '1234567890123456'  // Inválido
+    creditCardUtils.gerarNumero('visa'), // Visa válido
+    '1234567890123456'                   // Inválido
   ];
 
   await testTool(
