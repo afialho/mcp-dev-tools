@@ -8,10 +8,10 @@ async function testToolRegistryLoading() {
   const registry = new ToolRegistry();
   registry.loadTools();
 
-  assert.strictEqual(registry.getToolCount(), 5, 'Deve carregar 5 ferramentas');
+  assert.strictEqual(registry.getToolCount(), 8, 'Deve carregar 8 ferramentas');
 
   const toolNames = registry.getToolNames();
-  const expectedTools = ['gerar_uuid', 'validar_email', 'gerar_hash', 'formatar_json', 'calcular_idade'];
+  const expectedTools = ['gerar_uuid', 'email_utils', 'gerar_hash', 'formatar_json', 'calcular_idade', 'cpf_utils', 'cnpj_utils', 'password_utils'];
 
   for (const tool of expectedTools) {
     assert(toolNames.includes(tool), `Ferramenta ${tool} deve estar carregada`);
@@ -56,7 +56,7 @@ async function testToolSchemas() {
   registry.loadTools();
 
   const schemas = registry.getToolSchemas();
-  assert.strictEqual(schemas.length, 5, 'Deve ter 5 schemas');
+  assert.strictEqual(schemas.length, 8, 'Deve ter 8 schemas');
 
   for (const schema of schemas) {
     assert(schema.name, 'Schema deve ter nome');

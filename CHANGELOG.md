@@ -5,6 +5,46 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2025-06-26
+
+### Added
+- ✨ **3 novas ferramentas brasileiras**:
+  - 🇧🇷 **CPF Utils**: Gerar, validar e formatar CPFs brasileiros
+  - 🏢 **CNPJ Utils**: Gerar, validar e formatar CNPJs brasileiros
+  - 🔒 **Password Utils**: Geração, análise, validação e verificação de senhas
+- ✨ **Email Utils expandido**: Transformação completa da ferramenta de email
+  - 📧 **Validação avançada**: Múltiplos emails e detecção de motivos de invalidez
+  - 🎲 **Geração inteligente**: Emails aleatórios, profissionais e de teste
+  - 🔍 **Extração de texto**: Localizar emails em textos longos
+  - 📊 **Análise detalhada**: Detecção de emails temporários e análise de domínios
+  - 🎨 **Formatação**: Normalização e limpeza de emails
+- ✨ **Processamento em lote**: Suporte a até 100 itens por operação (CPF/CNPJ)
+- ✨ **Segurança avançada**:
+  - 🔐 Geração de senhas (forte, média, numérica, personalizada)
+  - 📈 Análise de força com entropia e tempo de quebra
+  - ✅ Validação contra critérios de segurança
+  - 🧠 Geração de frases-senha memoráveis
+  - 🔍 Estrutura para verificação de vazamentos (HaveIBeenPwned)
+
+### Changed
+- 🔄 **Email Validator → Email Utils**: Expansão completa da ferramenta
+- 🔄 **README.md atualizado**: Documentação completa das 8 ferramentas
+- 🔄 **Configuração MCP**: Uso de `@latest` para sempre obter versão mais recente
+- 🔄 **tools/index.js**: Registro correto de todas as ferramentas
+
+### Improved
+- ⚡ **Cobertura brasileira completa**: CPF e CNPJ com algoritmos oficiais
+- ⚡ **Segurança profissional**: Ferramentas de senha de nível empresarial
+- ⚡ **Workflows práticos**: Exemplos reais de uso das 8 ferramentas
+- ⚡ **Documentação rica**: Casos de uso, exemplos e demonstrações práticas
+
+### Technical
+- 🔧 **8 ferramentas totais**: UUID, Email, Hash, JSON, Idade, CPF, CNPJ, Senhas
+- 🔧 **Algoritmos validados**: Implementação oficial dos algoritmos de CPF/CNPJ
+- 🔧 **Testes abrangentes**: 100% de cobertura para todas as novas ferramentas
+- 🔧 **Arquitetura consistente**: Padrão unificado para todas as ferramentas
+- 🔧 **Exemplo completo**: Demonstração prática usando todas as 8 ferramentas
+
 ## [1.1.2] - 2025-06-26
 
 ### Changed
@@ -86,7 +126,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - ⚡ **Manutenção simplificada**: Fácil localização e correção de problemas
 
 ### Technical
-- 🔧 **5 ferramentas** com testes isolados e atômicos
+- 🔧 **8 ferramentas** com testes isolados e atômicos
 - 🔧 **1 utilitário** (ToolRegistry) com testes específicos
 - 🔧 **1 teste de integração** do servidor completo
 - 🔧 **100% de sucesso** em todos os testes

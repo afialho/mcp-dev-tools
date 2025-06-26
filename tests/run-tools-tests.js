@@ -1,10 +1,13 @@
 #!/usr/bin/env node
 
 const { runUuidGeneratorTests } = require('./tools/uuid-generator.test');
-const { runEmailValidatorTests } = require('./tools/email-validator.test');
+const { runEmailUtilsTests } = require('./tools/email-utils.test');
 const { runHashGeneratorTests } = require('./tools/hash-generator.test');
 const { runJsonFormatterTests } = require('./tools/json-formatter.test');
 const { runAgeCalculatorTests } = require('./tools/age-calculator.test');
+const { runCpfUtilsTests } = require('./tools/cpf-utils.test');
+const { runCnpjUtilsTests } = require('./tools/cnpj-utils.test');
+const { runPasswordUtilsTests } = require('./tools/password-utils.test');
 
 async function runAllToolsTests() {
   console.log('🧪 EXECUTANDO TESTES DAS FERRAMENTAS INDIVIDUAIS\n');
@@ -15,7 +18,7 @@ async function runAllToolsTests() {
     await runUuidGeneratorTests();
     console.log('');
 
-    await runEmailValidatorTests();
+    await runEmailUtilsTests();
     console.log('');
 
     await runHashGeneratorTests();
@@ -27,9 +30,18 @@ async function runAllToolsTests() {
     await runAgeCalculatorTests();
     console.log('');
 
+    await runCpfUtilsTests();
+    console.log('');
+
+    await runCnpjUtilsTests();
+    console.log('');
+
+    await runPasswordUtilsTests();
+    console.log('');
+
     console.log('=' .repeat(60));
     console.log('🎉 TODOS OS TESTES DAS FERRAMENTAS PASSARAM!');
-    console.log('✅ 5 ferramentas testadas individualmente');
+    console.log('✅ 8 ferramentas testadas individualmente');
     console.log('✅ Atomicidade e isolamento garantidos');
     console.log('=' .repeat(60));
 
