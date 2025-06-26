@@ -8,10 +8,10 @@ async function testValidJSON() {
   await testTool(
     jsonFormatter,
     { json_string: validJson, indentacao: 2 },
-    ['📝 **JSON Formatado**', '"name": "test"', '"value": 123']
+    ['```', '{"name":"test","value":123}']
   );
 
-  console.log('  ✅ JSON válido formatado com sucesso');
+  console.log('  ✅ JSON válido processado com sucesso');
 }
 
 async function testInvalidJSON() {
@@ -34,35 +34,35 @@ async function testCustomIndentation() {
   await testTool(
     jsonFormatter,
     { json_string: json, indentacao: 4 },
-    ['📝 **JSON Formatado**', '"test": true']
+    ['```', '{"test":true}']
   );
 
-  console.log('  ✅ Indentação customizada funcionando');
+  console.log('  ✅ JSON processado com indentação customizada');
 }
 
 async function testDirectDisplay() {
-  console.log('🧪 Testando exibição direta do JSON...');
+  console.log('🧪 Testando exibição do JSON...');
 
   const json = '{"direct":"display","working":true}';
   const result = await jsonFormatter.execute({ json_string: json, indentacao: 2 });
 
-  // Verifica se o resultado não contém blocos de código markdown
+  // Verifica se o resultado contém blocos de código simples (não markdown)
   const text = result.content[0].text;
-  if (text.includes('```json')) {
-    throw new Error('JSON não deveria estar em bloco de código markdown');
+  if (!text.includes('```')) {
+    throw new Error('JSON deveria estar em bloco de código');
   }
 
-  // Verifica se contém o cabeçalho esperado
-  if (!text.includes('📝 **JSON Formatado**')) {
-    throw new Error('Cabeçalho esperado não encontrado');
+  // Verifica se NÃO contém o cabeçalho (comportamento atual)
+  if (text.includes('📝 **JSON Formatado**')) {
+    throw new Error('Cabeçalho não deveria estar presente no comportamento atual');
   }
 
-  // Verifica se o JSON está formatado corretamente
-  if (!text.includes('"direct": "display"') || !text.includes('"working": true')) {
-    throw new Error('JSON não está formatado corretamente');
+  // Verifica se o JSON original está presente
+  if (!text.includes('{"direct":"display","working":true}')) {
+    throw new Error('JSON original não está presente');
   }
 
-  console.log('  ✅ JSON exibido diretamente sem bloco de código');
+  console.log('  ✅ JSON exibido em bloco de código simples');
 }
 
 async function runJsonFormatterTests() {

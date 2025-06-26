@@ -27,7 +27,7 @@ const jsonFormatterTool = {
       const jsonFormatado = JSON.stringify(jsonObj, null, indentacao);
 
       let resultado;
-      resultado = `📝 **JSON Formatado**\n\n${jsonFormatado}\n`;
+      resultado = `\`\`\`\n${json_string}\n\`\`\`\n`;
 
       return {
         content: [
