@@ -1,6 +1,6 @@
 const jsonFormatterTool = {
   name: 'formatar_json',
-  description: 'Formata e valida JSON',
+  description: 'Formata e valida JSON - sempre exibe o JSON formatado no chat por padrão',
   inputSchema: {
     type: 'object',
     properties: {
@@ -20,13 +20,18 @@ const jsonFormatterTool = {
         description: 'Formato de saída: "rich" (com formatação), "plain" (apenas JSON), ou "both" (JSON + formatação)',
         enum: ['rich', 'plain', 'both'],
         default: 'both'
+      },
+      always_display: {
+        type: 'boolean',
+        description: 'Sempre exibir o JSON formatado no chat (padrão: true)',
+        default: true
       }
     },
     required: ['json_string']
   },
   
   async execute(args) {
-    const { json_string, indentacao = 2, output_format = 'both' } = args;
+    const { json_string, indentacao = 2, output_format = 'both', always_display = true } = args;
 
     try {
       const jsonObj = JSON.parse(json_string);
@@ -34,15 +39,27 @@ const jsonFormatterTool = {
 
       let resultado;
 
-      if (output_format === 'plain') {
-        // Formato simples: apenas o JSON formatado
-        resultado = jsonFormatado;
-      } else if (output_format === 'rich') {
-        // Formato rico: com emojis, títulos e formatação markdown
-        resultado = `📝 **JSON Formatado**\n\n\`\`\`json\n${jsonFormatado}\n\`\`\`\n\n✅ JSON válido e formatado com sucesso!`;
+      // Se always_display for true, sempre exibir o JSON formatado
+      if (always_display) {
+        if (output_format === 'plain') {
+          // Formato simples: apenas o JSON formatado
+          resultado = `\`\`\`json\n${jsonFormatado}\n\`\`\``;
+        } else if (output_format === 'rich') {
+          // Formato rico: com emojis, títulos e formatação markdown
+          resultado = `📝 **JSON Formatado**\n\n\`\`\`json\n${jsonFormatado}\n\`\`\`\n\n✅ JSON válido e formatado com sucesso!`;
+        } else {
+          // Formato both: JSON limpo + confirmação rica (padrão melhorado)
+          resultado = `\`\`\`json\n${jsonFormatado}\n\`\`\`\n\n✅ JSON válido e formatado com sucesso!`;
+        }
       } else {
-        // Formato both: JSON limpo + confirmação rica (sem duplicar JSON)
-        resultado = `\`\`\`json\n${jsonFormatado}\n\`\`\`\n\n✅ JSON válido e formatado com sucesso!`;
+        // Comportamento original (para compatibilidade)
+        if (output_format === 'plain') {
+          resultado = jsonFormatado;
+        } else if (output_format === 'rich') {
+          resultado = `📝 **JSON Formatado**\n\n\`\`\`json\n${jsonFormatado}\n\`\`\`\n\n✅ JSON válido e formatado com sucesso!`;
+        } else {
+          resultado = `\`\`\`json\n${jsonFormatado}\n\`\`\`\n\n✅ JSON válido e formatado com sucesso!`;
+        }
       }
 
       return {
