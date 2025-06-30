@@ -10,6 +10,7 @@ const {
 } = require('@modelcontextprotocol/sdk/types.js');
 const ToolRegistry = require('../utils/tool-registry.js');
 
+
 class DevToolsServer {
   constructor() {
     const packageJson = require('../package.json');

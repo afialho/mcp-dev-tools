@@ -14,6 +14,7 @@ const { runCompetenciaUtilsTests } = require('./tools/competencia-utils.test');
 const { runBase64UtilsTests } = require('./tools/base64-utils.test');
 const { runQRCodeUtilsTests } = require('./tools/qr-code-utils.test');
 const { runXmlUtilsTests } = require('./tools/xml-utils.test');
+const { runHtmlUtilsTests } = require('./tools/html-utils.test');
 
 async function runAllToolsTests() {
   console.log('🧪 EXECUTANDO TESTES DAS FERRAMENTAS INDIVIDUAIS\n');
@@ -63,9 +64,12 @@ async function runAllToolsTests() {
     await runXmlUtilsTests();
     console.log('');
 
+    await runHtmlUtilsTests();
+    console.log('');
+
     console.log('=' .repeat(60));
     console.log('🎉 TODOS OS TESTES DAS FERRAMENTAS PASSARAM!');
-    console.log('✅ 14 ferramentas testadas individualmente');
+    console.log('✅ 15 ferramentas testadas individualmente');
     console.log('✅ Atomicidade e isolamento garantidos');
     console.log('=' .repeat(60));
 

@@ -5,6 +5,20 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.1] - 2025-06-30
+
+### Fixed
+- 🔧 **QR Code Integration**: Corrigida integração da ferramenta QR Code no sistema de carregamento
+- 📦 **Tool Registry**: QR Code Utils agora carregado corretamente no índice de ferramentas
+- ✅ **Testes completos**: Todos os testes passando com 100% de sucesso
+- 🔄 **Estabilidade**: Sistema de ferramentas totalmente estável e funcional
+
+### Technical
+- 🧪 **15 ferramentas testadas**: Todas as ferramentas validadas individualmente
+- 📊 **Cobertura completa**: Testes de integração, utilitários e servidor
+- 🚀 **Performance**: Sistema otimizado e responsivo
+- 📈 **Qualidade**: Código refatorado e organizado
+
 ## [1.7.0] - 2025-06-26
 
 ### Added
