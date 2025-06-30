@@ -10,7 +10,6 @@ const competenciaUtilsTool = {
         description: 'Operação: gerar competências, validar formatos, converter entre formatos, calcular diferenças/períodos, formatar apresentação, analisar informações fiscais'
       },
       
-      // Parâmetros para GERAR
       tipo: {
         type: 'string',
         enum: ['sequencia', 'ultimos_meses', 'proximos_meses', 'ano_completo', 'trimestre', 'semestre', 'exercicio_fiscal'],
@@ -49,7 +48,6 @@ const competenciaUtilsTool = {
         description: 'Ordem de geração das competências'
       },
       
-      // Parâmetros para VALIDAR, CONVERTER, FORMATAR, ANALISAR
       competencias: {
         type: 'array',
         items: { type: 'string' },
@@ -57,7 +55,6 @@ const competenciaUtilsTool = {
         description: 'Lista de competências para processar'
       },
       
-      // Parâmetros para VALIDAR
       tipo_validacao: {
         type: 'string',
         enum: ['formato', 'intervalo', 'sequencia', 'exercicio'],
@@ -79,7 +76,6 @@ const competenciaUtilsTool = {
         description: 'Competência máxima para validação de intervalo'
       },
       
-      // Parâmetros para CONVERTER
       tipo_conversao: {
         type: 'string',
         enum: ['formato', 'normalizar', 'data_inicio', 'data_fim', 'timestamp'],
@@ -104,7 +100,6 @@ const competenciaUtilsTool = {
         description: 'Separador para formato de destino'
       },
       
-      // Parâmetros para CALCULAR
       tipo_calculo: {
         type: 'string',
         enum: ['diferenca', 'adicionar', 'subtrair', 'dias_competencia', 'dias_uteis', 'trimestre', 'semestre', 'primeiro_dia', 'ultimo_dia'],
@@ -125,7 +120,6 @@ const competenciaUtilsTool = {
         description: 'Incluir feriados nos cálculos'
       },
       
-      // Parâmetros para FORMATAR
       formato: {
         type: 'string',
         enum: ['extenso', 'abreviado', 'customizado', 'fiscal'],
@@ -152,7 +146,6 @@ const competenciaUtilsTool = {
         description: 'Separador para formatação'
       },
       
-      // Parâmetros para ANALISAR
       tipo_analise: {
         type: 'string',
         enum: ['completa', 'fiscal', 'estatisticas', 'vencimentos'],
@@ -170,7 +163,6 @@ const competenciaUtilsTool = {
         description: 'Incluir estatísticas para múltiplas competências'
       },
       
-      // Parâmetros gerais
       seculo_base: {
         type: 'number',
         default: 2000,
@@ -185,7 +177,6 @@ const competenciaUtilsTool = {
     required: ['operacao']
   },
 
-  // Nomes dos meses em português
   mesesPorExtenso: [
     'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
     'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
@@ -196,7 +187,6 @@ const competenciaUtilsTool = {
     'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'
   ],
 
-  // Calendário de vencimentos fiscais brasileiros (dia útil do mês seguinte)
   vencimentosFiscais: {
     'icms': { dia: 10, descricao: 'ICMS - 10º dia útil' },
     'iss': { dia: 15, descricao: 'ISS - 15º dia útil' },
@@ -205,17 +195,16 @@ const competenciaUtilsTool = {
     'simples': { dia: 20, descricao: 'Simples Nacional - 20º dia' }
   },
 
-  // Detectar formato de competência
   detectarFormato(competencia) {
     const formatos = [
-      { regex: /^(\d{2})\/(\d{4})$/, tipo: 'mm_yyyy' },      // 01/2024
-      { regex: /^(\d{1,2})\/(\d{4})$/, tipo: 'mm_yyyy' },   // 1/2024
-      { regex: /^(\d{2})\/(\d{2})$/, tipo: 'mm_yy' },       // 01/24
-      { regex: /^(\d{1,2})\/(\d{2})$/, tipo: 'mm_yy' },     // 1/24
-      { regex: /^(\d{2})-(\d{2})$/, tipo: 'yy_mm' },        // 24-01
-      { regex: /^(\d{4})-(\d{2})$/, tipo: 'yyyy_mm' },      // 2024-01
-      { regex: /^(\d{2})-(\d{4})$/, tipo: 'mm_yyyy' },      // 01-2024
-      { regex: /^(\d{4})\/(\d{2})$/, tipo: 'yyyy_mm' }      // 2024/01
+      { regex: /^(\d{2})\/(\d{4})$/, tipo: 'mm_yyyy' },
+      { regex: /^(\d{1,2})\/(\d{4})$/, tipo: 'mm_yyyy' },
+      { regex: /^(\d{2})\/(\d{2})$/, tipo: 'mm_yy' },
+      { regex: /^(\d{1,2})\/(\d{2})$/, tipo: 'mm_yy' },
+      { regex: /^(\d{2})-(\d{2})$/, tipo: 'yy_mm' },
+      { regex: /^(\d{4})-(\d{2})$/, tipo: 'yyyy_mm' },
+      { regex: /^(\d{2})-(\d{4})$/, tipo: 'mm_yyyy' },
+      { regex: /^(\d{4})\/(\d{2})$/, tipo: 'yyyy_mm' }
     ];
 
     for (const formato of formatos) {
@@ -227,7 +216,6 @@ const competenciaUtilsTool = {
     return { tipo: 'desconhecido', match: null };
   },
 
-  // Normalizar competência para formato padrão MM/YYYY
   normalizarCompetencia(competencia, opcoes = {}) {
     const { seculo_base = 2000, limite_yy = 50 } = opcoes;
     const deteccao = this.detectarFormato(competencia);
@@ -263,12 +251,10 @@ const competenciaUtilsTool = {
           return null;
       }
 
-      // Validar mês
       if (mes < 1 || mes > 12) {
         return null;
       }
 
-      // Validar ano
       if (ano < 1900 || ano > 2100) {
         return null;
       }
@@ -285,16 +271,14 @@ const competenciaUtilsTool = {
     }
   },
 
-  // Interpretar ano de 2 dígitos
   interpretarAnoYY(yy, seculo_base = 2000, limite = 50) {
     if (yy <= limite) {
-      return seculo_base + yy; // 00-50 = 2000-2050
+      return seculo_base + yy;
     } else {
-      return seculo_base - 100 + yy; // 51-99 = 1951-1999
+      return seculo_base - 100 + yy;
     }
   },
 
-  // OPERAÇÃO: GERAR
   executarGeracao(args) {
     const {
       tipo = 'ultimos_meses',
@@ -361,12 +345,10 @@ const competenciaUtilsTool = {
           };
       }
 
-      // Aplicar ordem
       if (ordem === 'decrescente') {
         resultados.reverse();
       }
 
-      // Formatar saída
       const competenciasFormatadas = resultados.map(comp =>
         this.formatarCompetenciaSaida(comp, formato_destino, separador)
       );
@@ -391,7 +373,6 @@ const competenciaUtilsTool = {
     }
   },
 
-  // OPERAÇÃO: VALIDAR
   executarValidacao(args) {
     const {
       competencias = [],
@@ -450,7 +431,6 @@ const competenciaUtilsTool = {
     }
   },
 
-  // Métodos auxiliares para geração
   gerarUltimosMeses(quantidade, incluirAtual, mesAtual, anoAtual) {
     const resultados = [];
     let mes = mesAtual;
@@ -465,7 +445,7 @@ const competenciaUtilsTool = {
     }
 
     for (let i = 0; i < quantidade; i++) {
-      resultados.unshift({ mes, ano }); // Adicionar no início para ordem cronológica
+      resultados.unshift({ mes, ano });
       mes--;
       if (mes < 1) {
         mes = 12;
@@ -584,7 +564,6 @@ const competenciaUtilsTool = {
       interpretacao: null
     };
 
-    // Normalizar competência
     const normalizada = this.normalizarCompetencia(competencia, { seculo_base, limite_yy });
 
     if (!normalizada) {
@@ -595,7 +574,6 @@ const competenciaUtilsTool = {
     resultado.formato_detectado = normalizada.formato_original;
     resultado.interpretacao = normalizada.competencia_normalizada;
 
-    // Validações específicas
     switch (tipo) {
       case 'formato':
         if (formato_esperado === 'auto' || normalizada.formato_original === formato_esperado) {
@@ -635,7 +613,6 @@ const competenciaUtilsTool = {
     return comp1.mes - comp2.mes;
   },
 
-  // OPERAÇÃO: CONVERTER
   executarConversao(args) {
     const {
       competencias = [],
@@ -717,7 +694,6 @@ const competenciaUtilsTool = {
     }
   },
 
-  // OPERAÇÃO: CALCULAR
   executarCalculo(args) {
     const {
       tipo_calculo,
@@ -810,7 +786,6 @@ const competenciaUtilsTool = {
     }
   },
 
-  // Métodos auxiliares para cálculos
   calcularDiferenca(competenciaInicio, competenciaFim, opcoes) {
     const inicio = this.normalizarCompetencia(competenciaInicio, opcoes);
     const fim = this.normalizarCompetencia(competenciaFim, opcoes);
@@ -838,7 +813,6 @@ const competenciaUtilsTool = {
       let novoMes = normalizada.mes + (valor * multiplicador);
       let novoAno = normalizada.ano;
 
-      // Ajustar ano se necessário
       while (novoMes > 12) {
         novoMes -= 12;
         novoAno++;
@@ -889,7 +863,6 @@ const competenciaUtilsTool = {
     return resultados.join('\n');
   },
 
-  // OPERAÇÃO: FORMATAR
   executarFormatacao(args) {
     const {
       competencias = [],
@@ -962,7 +935,6 @@ const competenciaUtilsTool = {
     }
   },
 
-  // Métodos auxiliares para formatação
   formatarExtenso(competencia, incluirExercicio) {
     const mesNome = this.mesesPorExtenso[competencia.mes - 1];
     let resultado = `${mesNome} de ${competencia.ano}`;
@@ -1000,7 +972,6 @@ const competenciaUtilsTool = {
     return `${String(competencia.mes).padStart(2, '0')}/${competencia.ano} (Q${trimestre}/${competencia.ano} - ${semestre}/${competencia.ano} - Exercício ${competencia.ano})`;
   },
 
-  // OPERAÇÃO: ANALISAR
   executarAnalise(args) {
     const {
       competencias = [],
@@ -1059,7 +1030,6 @@ const competenciaUtilsTool = {
     }
   },
 
-  // Métodos auxiliares para análise
   analisarCompleta(competencia, incluirVencimentos, opcoes) {
     const normalizada = this.normalizarCompetencia(competencia, opcoes);
     if (!normalizada) {

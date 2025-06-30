@@ -31,7 +31,6 @@ const uuidGeneratorTool = {
       if (versao === 'v4') {
         uuids.push(crypto.randomUUID());
       } else if (versao === 'v1') {
-        // Simulação simples de UUID v1
         const timestamp = Date.now().toString(16);
         const randomPart = crypto.randomBytes(6).toString('hex');
         uuids.push(`${timestamp}-${randomPart}`);

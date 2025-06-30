@@ -32,51 +32,40 @@ const cpfUtilsTool = {
     required: ['operacao']
   },
 
-  // Função para validar CPF
   validarCPF(cpf) {
-    // Remove formatação
     const cpfLimpo = cpf.replace(/[^\d]/g, '');
-    
-    // Verifica se tem 11 dígitos
+
     if (cpfLimpo.length !== 11) return false;
-    
-    // Verifica sequências inválidas (111.111.111-11, 222.222.222-22, etc.)
+
     if (/^(\d)\1{10}$/.test(cpfLimpo)) return false;
-    
-    // Calcula primeiro dígito verificador
+
     let soma = 0;
     for (let i = 0; i < 9; i++) {
       soma += parseInt(cpfLimpo[i]) * (10 - i);
     }
     let digito1 = 11 - (soma % 11);
     if (digito1 > 9) digito1 = 0;
-    
-    // Calcula segundo dígito verificador
+
     soma = 0;
     for (let i = 0; i < 10; i++) {
       soma += parseInt(cpfLimpo[i]) * (11 - i);
     }
     let digito2 = 11 - (soma % 11);
     if (digito2 > 9) digito2 = 0;
-    
-    // Verifica se os dígitos estão corretos
+
     return digito1 === parseInt(cpfLimpo[9]) && digito2 === parseInt(cpfLimpo[10]);
   },
 
-  // Função para gerar CPF válido
   gerarCPF() {
-    // Gera 9 primeiros dígitos aleatórios
     const primeiros9 = Array.from({length: 9}, () => Math.floor(Math.random() * 10));
-    
-    // Calcula primeiro dígito verificador
+
     let soma = 0;
     for (let i = 0; i < 9; i++) {
       soma += primeiros9[i] * (10 - i);
     }
     const digito1 = 11 - (soma % 11);
     const dv1 = digito1 > 9 ? 0 : digito1;
-    
-    // Calcula segundo dígito verificador
+
     soma = 0;
     for (let i = 0; i < 9; i++) {
       soma += primeiros9[i] * (11 - i);
@@ -84,23 +73,20 @@ const cpfUtilsTool = {
     soma += dv1 * 2;
     const digito2 = 11 - (soma % 11);
     const dv2 = digito2 > 9 ? 0 : digito2;
-    
+
     return [...primeiros9, dv1, dv2].join('');
   },
 
-  // Função para formatar CPF com máscara
   formatarComMascara(cpf) {
     const cpfLimpo = cpf.replace(/[^\d]/g, '');
-    if (cpfLimpo.length !== 11) return cpf; // Retorna original se inválido
+    if (cpfLimpo.length !== 11) return cpf;
     return cpfLimpo.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
   },
 
-  // Função para remover máscara do CPF
   removerMascara(cpf) {
     return cpf.replace(/[^\d]/g, '');
   },
 
-  // Função para obter motivo de invalidez
   obterMotivoInvalidez(cpf) {
     const cpfLimpo = cpf.replace(/[^\d]/g, '');
     

@@ -4,7 +4,6 @@ const TurndownService = require('turndown');
 const createDOMPurify = require('dompurify');
 const { JSDOM } = require('jsdom');
 
-// Configurar DOMPurify para Node.js
 const window = new JSDOM('').window;
 const DOMPurify = createDOMPurify(window);
 
@@ -164,17 +163,14 @@ const htmlUtilsTool = {
         const linhaTrimmed = linha.trim();
         if (!linhaTrimmed) continue;
 
-        // Diminuir indentação para tags de fechamento
         if (linhaTrimmed.startsWith('</') && !linhaTrimmed.includes('/>')) {
           nivelIndentacao = Math.max(0, nivelIndentacao - 1);
         }
 
-        // Adicionar linha com indentação
         linhasFormatadas.push(espacos.repeat(nivelIndentacao) + linhaTrimmed);
 
-        // Aumentar indentação para tags de abertura (exceto self-closing e inline)
-        if (linhaTrimmed.startsWith('<') && 
-            !linhaTrimmed.startsWith('</') && 
+        if (linhaTrimmed.startsWith('<') &&
+            !linhaTrimmed.startsWith('</') &&
             !linhaTrimmed.endsWith('/>') &&
             !this.isInlineTag(linhaTrimmed)) {
           nivelIndentacao++;
@@ -268,13 +264,10 @@ const htmlUtilsTool = {
       const problemas = [];
       const avisos = [];
 
-      // Verificar estrutura básica
       this.validarEstrutura($, problemas, avisos);
-      
-      // Verificar tags não fechadas
+
       this.validarTagsFechadas(html_string, problemas);
-      
-      // Verificar atributos obrigatórios
+
       this.validarAtributosObrigatorios($, problemas, avisos);
 
       const isValido = problemas.length === 0;
@@ -312,20 +305,17 @@ const htmlUtilsTool = {
     }
   },
 
-  // Métodos auxiliares
   isInlineTag(linha) {
     const inlineTags = ['span', 'a', 'strong', 'em', 'b', 'i', 'small', 'code', 'kbd', 'var', 'samp'];
     return inlineTags.some(tag => linha.includes(`<${tag}`));
   },
 
   validarEstrutura($, problemas, avisos) {
-    // Verificar se existe DOCTYPE
     const html = $.html();
     if (!html.toLowerCase().includes('<!doctype')) {
       avisos.push('DOCTYPE não encontrado');
     }
 
-    // Verificar estrutura básica HTML
     if ($('html').length === 0) {
       problemas.push('Tag <html> não encontrada');
     }
@@ -357,7 +347,6 @@ const htmlUtilsTool = {
       closeTags.push(match[1].toLowerCase());
     }
     
-    // Verificar se todas as tags abertas foram fechadas
     const openCount = {};
     const closeCount = {};
     
@@ -377,21 +366,18 @@ const htmlUtilsTool = {
   },
 
   validarAtributosObrigatorios($, problemas, avisos) {
-    // Verificar imagens sem alt
     $('img').each((i, elem) => {
       if (!$(elem).attr('alt')) {
         avisos.push(`Imagem sem atributo 'alt' encontrada`);
       }
     });
 
-    // Verificar links sem href
     $('a').each((i, elem) => {
       if (!$(elem).attr('href')) {
         avisos.push(`Link sem atributo 'href' encontrado`);
       }
     });
 
-    // Verificar inputs sem label
     $('input[type!="hidden"]').each((i, elem) => {
       const id = $(elem).attr('id');
       if (id && $(`label[for="${id}"]`).length === 0) {
@@ -417,7 +403,6 @@ const htmlUtilsTool = {
       let tipoConversao = '';
 
       if (html_string) {
-        // Conversão HTML para outros formatos
         switch (formato_destino) {
           case 'markdown':
             const turndownService = new TurndownService({
@@ -444,7 +429,6 @@ const htmlUtilsTool = {
             throw new Error(`Formato de destino '${formato_destino}' não suportado`);
         }
       } else if (markdown_string) {
-        // Conversão Markdown para HTML (implementação básica)
         resultado = this.markdownParaHtml(markdown_string);
         tipoConversao = 'Markdown → HTML';
       }
@@ -485,11 +469,9 @@ const htmlUtilsTool = {
       let operacao = '';
 
       if (texto_para_escapar) {
-        // Escapar texto para HTML
         resultado = this.escaparHtml(texto_para_escapar);
         operacao = 'Texto → HTML Escapado';
       } else {
-        // Desescapar HTML para texto
         resultado = this.desescaparHtml(html_string);
         operacao = 'HTML → Texto Desescapado';
       }
@@ -530,7 +512,6 @@ const htmlUtilsTool = {
       let resultado = '';
 
       if (seletor_css) {
-        // Extração por seletor CSS específico
         const elementos = $(seletor_css);
         resultado = `🎯 **Extração por Seletor CSS: \`${seletor_css}\`**\n\n`;
         resultado += `**Elementos Encontrados:** ${elementos.length}\n\n`;
@@ -539,7 +520,6 @@ const htmlUtilsTool = {
           const $elem = $(elem);
           resultado += `**${index + 1}.** \`${$elem.prop('tagName').toLowerCase()}\`\n`;
 
-          // Atributos importantes
           const attrs = [];
           if ($elem.attr('id')) attrs.push(`id="${$elem.attr('id')}"`);
           if ($elem.attr('class')) attrs.push(`class="${$elem.attr('class')}"`);
@@ -558,7 +538,6 @@ const htmlUtilsTool = {
           resultado += '\n';
         });
       } else {
-        // Extração automática de elementos importantes
         resultado = this.extrairElementosImportantes($);
       }
 
@@ -576,7 +555,6 @@ const htmlUtilsTool = {
     }
   },
 
-  // Métodos auxiliares para conversão e extração
   htmlParaJson($) {
     const estrutura = {
       title: $('title').text() || null,
@@ -592,7 +570,6 @@ const htmlUtilsTool = {
       }
     };
 
-    // Meta tags
     $('meta').each((i, elem) => {
       const name = $(elem).attr('name') || $(elem).attr('property');
       const content = $(elem).attr('content');
@@ -601,7 +578,6 @@ const htmlUtilsTool = {
       }
     });
 
-    // Headings
     $('h1, h2, h3, h4, h5, h6').each((i, elem) => {
       estrutura.headings.push({
         level: parseInt(elem.tagName.charAt(1)),
@@ -609,7 +585,6 @@ const htmlUtilsTool = {
       });
     });
 
-    // Links
     $('a[href]').each((i, elem) => {
       estrutura.links.push({
         href: $(elem).attr('href'),
@@ -618,7 +593,6 @@ const htmlUtilsTool = {
       });
     });
 
-    // Images
     $('img').each((i, elem) => {
       estrutura.images.push({
         src: $(elem).attr('src'),
@@ -631,21 +605,14 @@ const htmlUtilsTool = {
   },
 
   markdownParaHtml(markdown) {
-    // Implementação básica de Markdown para HTML
     let html = markdown
-      // Headers
       .replace(/^### (.*$)/gim, '<h3>$1</h3>')
       .replace(/^## (.*$)/gim, '<h2>$1</h2>')
       .replace(/^# (.*$)/gim, '<h1>$1</h1>')
-      // Bold
       .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
-      // Italic
       .replace(/\*(.*)\*/gim, '<em>$1</em>')
-      // Code
       .replace(/`(.*)`/gim, '<code>$1</code>')
-      // Links
       .replace(/\[([^\]]*)\]\(([^\)]*)\)/gim, '<a href="$2">$1</a>')
-      // Line breaks
       .replace(/\n/gim, '<br>');
 
     return html;
@@ -672,19 +639,16 @@ const htmlUtilsTool = {
   extrairElementosImportantes($) {
     let resultado = '📋 **Extração Automática de Elementos**\n\n';
 
-    // Title
     const title = $('title').text();
     if (title) {
       resultado += `**📄 Título:** ${title}\n\n`;
     }
 
-    // Meta description
     const description = $('meta[name="description"]').attr('content');
     if (description) {
       resultado += `**📝 Descrição:** ${description}\n\n`;
     }
 
-    // Headings
     const headings = [];
     $('h1, h2, h3, h4, h5, h6').each((i, elem) => {
       headings.push({
@@ -701,7 +665,6 @@ const htmlUtilsTool = {
       resultado += '\n';
     }
 
-    // Links
     const links = [];
     $('a[href]').each((i, elem) => {
       const href = $(elem).attr('href');
@@ -722,7 +685,6 @@ const htmlUtilsTool = {
       resultado += '\n';
     }
 
-    // Images
     const images = [];
     $('img').each((i, elem) => {
       const src = $(elem).attr('src');
@@ -762,7 +724,6 @@ const htmlUtilsTool = {
       const $ = cheerio.load(html_string);
       let resultado = '📊 **Análise Completa do HTML**\n\n';
 
-      // Estatísticas básicas
       const stats = this.calcularEstatisticas($, html_string);
       resultado += `**📈 Estatísticas Básicas:**\n`;
       resultado += `- **Tamanho Total:** ${html_string.length} caracteres\n`;
@@ -836,7 +797,6 @@ const htmlUtilsTool = {
     const problemas = [];
     const sucessos = [];
 
-    // Title
     const title = $('title').text();
     if (title) {
       if (title.length >= 30 && title.length <= 60) {
@@ -848,7 +808,6 @@ const htmlUtilsTool = {
       problemas.push('Title não encontrado');
     }
 
-    // Meta description
     const description = $('meta[name="description"]').attr('content');
     if (description) {
       if (description.length >= 120 && description.length <= 160) {
@@ -860,7 +819,6 @@ const htmlUtilsTool = {
       problemas.push('Meta description não encontrada');
     }
 
-    // H1
     const h1s = $('h1');
     if (h1s.length === 1) {
       sucessos.push('Exatamente um H1 encontrado');
@@ -870,7 +828,6 @@ const htmlUtilsTool = {
       problemas.push(`Múltiplos H1s encontrados (${h1s.length})`);
     }
 
-    // Estrutura de headings
     const headings = [];
     $('h1, h2, h3, h4, h5, h6').each((i, elem) => {
       headings.push(parseInt(elem.tagName.charAt(1)));
@@ -900,7 +857,6 @@ const htmlUtilsTool = {
     const problemas = [];
     const sucessos = [];
 
-    // Imagens sem alt
     const imgsSemAlt = $('img:not([alt])').length;
     if (imgsSemAlt > 0) {
       problemas.push(`${imgsSemAlt} imagem(ns) sem atributo alt`);
@@ -908,13 +864,11 @@ const htmlUtilsTool = {
       sucessos.push('Todas as imagens possuem atributo alt');
     }
 
-    // Links sem texto
     const linksSemTexto = $('a[href]').filter((i, elem) => !$(elem).text().trim()).length;
     if (linksSemTexto > 0) {
       problemas.push(`${linksSemTexto} link(s) sem texto descritivo`);
     }
 
-    // Inputs sem label
     const inputsSemLabel = $('input[type!="hidden"]').filter((i, elem) => {
       const id = $(elem).attr('id');
       return !id || $(`label[for="${id}"]`).length === 0;
@@ -923,7 +877,6 @@ const htmlUtilsTool = {
       problemas.push(`${inputsSemLabel} input(s) sem label associado`);
     }
 
-    // Contraste (verificação básica)
     const textosBrancos = $('[style*="color: white"], [style*="color: #fff"], [style*="color: #ffffff"]').length;
     if (textosBrancos > 0) {
       problemas.push(`Possíveis problemas de contraste detectados (${textosBrancos} elementos)`);
@@ -1013,7 +966,6 @@ const htmlUtilsTool = {
       const $ = cheerio.load(html_string);
       const otimizacoes = [];
 
-      // Remover atributos vazios
       $('*').each((i, elem) => {
         const $elem = $(elem);
         const attrs = elem.attribs;
@@ -1025,7 +977,6 @@ const htmlUtilsTool = {
         }
       });
 
-      // Remover elementos vazios desnecessários
       $('div, span, p').each((i, elem) => {
         const $elem = $(elem);
         if (!$elem.text().trim() && $elem.children().length === 0) {
@@ -1034,7 +985,6 @@ const htmlUtilsTool = {
         }
       });
 
-      // Combinar classes duplicadas
       $('[class]').each((i, elem) => {
         const $elem = $(elem);
         const classes = $elem.attr('class').split(/\s+/).filter(Boolean);
@@ -1096,7 +1046,6 @@ const htmlUtilsTool = {
       resultado += `| Imagens | ${stats1.imagens} | ${stats2.imagens} | ${stats2.imagens - stats1.imagens} |\n`;
       resultado += `| Profundidade | ${stats1.profundidadeMaxima} | ${stats2.profundidadeMaxima} | ${stats2.profundidadeMaxima - stats1.profundidadeMaxima} |\n\n`;
 
-      // Comparar títulos
       const title1 = $1('title').text();
       const title2 = $2('title').text();
       if (title1 !== title2) {
@@ -1105,7 +1054,6 @@ const htmlUtilsTool = {
         resultado += `- HTML 2: "${title2}"\n\n`;
       }
 
-      // Comparar estrutura de headings
       const headings1 = [];
       const headings2 = [];
       $1('h1, h2, h3, h4, h5, h6').each((i, elem) => headings1.push($1(elem).text().trim()));

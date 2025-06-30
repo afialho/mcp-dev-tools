@@ -35,14 +35,12 @@ class DevToolsServer {
   }
 
   setupToolHandlers() {
-    // Listar todas as ferramentas disponíveis
     this.server.setRequestHandler(ListToolsRequestSchema, async () => {
       return {
         tools: this.toolRegistry.getToolSchemas()
       };
     });
 
-    // Executar ferramentas
     this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
       const { name, arguments: args } = request.params;
 
@@ -81,7 +79,6 @@ class DevToolsServer {
   }
 }
 
-// Iniciar o servidor
 if (require.main === module) {
   const server = new DevToolsServer();
   server.run().catch(console.error);

@@ -129,7 +129,6 @@ const xmlUtilsTool = {
     }
 
     try {
-      // Parse do XML com configuração mais simples
       const parser = new xml2js.Parser({
         explicitArray: false,
         ignoreAttrs: false,
@@ -138,7 +137,6 @@ const xmlUtilsTool = {
 
       const result = await parser.parseStringPromise(xml_string);
 
-      // Rebuild com formatação
       const builder = new xml2js.Builder({
         renderOpts: {
           pretty: true,
@@ -156,7 +154,6 @@ const xmlUtilsTool = {
         `**Preservar Espaços:** ${preservar_espacos ? 'Sim' : 'Não'}\n\n` +
         `\`\`\`xml\n${xmlFormatado}\n\`\`\``;
 
-      // Auto-display para XML formatado
       return {
         content: [
           { type: 'text', text: resultado },
@@ -187,7 +184,6 @@ const xmlUtilsTool = {
     }
 
     try {
-      // Parse e rebuild sem formatação
       const parser = new xml2js.Parser({
         trim: true,
         ignoreAttrs: false,
@@ -251,7 +247,6 @@ const xmlUtilsTool = {
 
       await parser.parseStringPromise(xml_string);
 
-      // Análise adicional
       const analise = this.analisarEstrutura(xml_string);
 
       const resultado = `✅ **XML Válido**\n\n` +
@@ -285,7 +280,6 @@ const xmlUtilsTool = {
     const { xml_string, dados_json, formato_destino = 'json', elemento_raiz = 'root' } = args;
 
     if (formato_destino === 'json') {
-      // XML → JSON
       if (!xml_string) {
         return {
           content: [{
@@ -328,7 +322,6 @@ const xmlUtilsTool = {
       }
 
     } else {
-      // JSON → XML
       if (!dados_json) {
         return {
           content: [{
@@ -638,7 +631,6 @@ const xmlUtilsTool = {
     }
   },
 
-  // Métodos auxiliares
   analisarEstrutura(xmlString) {
     const elementos = (xmlString.match(/<[^\/!?][^>]*>/g) || []).length;
     const atributos = (xmlString.match(/\s+\w+\s*=\s*["'][^"']*["']/g) || []).length;
@@ -667,15 +659,12 @@ const xmlUtilsTool = {
   analisarEstruturaCompleta(xmlString, parsedXml) {
     const analiseBasica = this.analisarEstrutura(xmlString);
 
-    // Análise adicional
     const comentarios = (xmlString.match(/<!--[\s\S]*?-->/g) || []).length;
     const processamento = (xmlString.match(/<\?[\s\S]*?\?>/g) || []).length;
     const cdata = (xmlString.match(/<!\[CDATA\[[\s\S]*?\]\]>/g) || []).length;
 
-    // Extrair namespaces
     const namespaces = [...new Set((xmlString.match(/xmlns:?\w*\s*=/g) || []).map(ns => ns.replace(/xmlns:?|=/g, '').trim()))];
 
-    // Elementos e atributos únicos
     const elementosUnicos = [...new Set((xmlString.match(/<(\w+)/g) || []).map(tag => tag.substring(1)))];
     const atributosUnicos = [...new Set((xmlString.match(/\s+(\w+)\s*=/g) || []).map(attr => attr.trim().replace('=', '')))];
 
@@ -691,18 +680,15 @@ const xmlUtilsTool = {
   },
 
   extrairComXPath(obj, xpath) {
-    // XPath simplificado - suporte básico para //elemento e //elemento/@atributo
     const resultados = [];
 
     if (xpath.startsWith('//')) {
       const path = xpath.substring(2);
 
       if (path.includes('/@')) {
-        // Extração de atributo
         const [elemento, atributo] = path.split('/@');
         this.buscarElementoAtributo(obj, elemento, atributo, resultados);
       } else {
-        // Extração de elemento
         this.buscarElemento(obj, path, resultados);
       }
     }
@@ -769,7 +755,6 @@ const xmlUtilsTool = {
     const diferencas = [];
     let identicos = true;
 
-    // Comparar chaves
     const chaves1 = Object.keys(obj1 || {});
     const chaves2 = Object.keys(obj2 || {});
     const todasChaves = [...new Set([...chaves1, ...chaves2])];
@@ -808,7 +793,7 @@ const xmlUtilsTool = {
       diferencas,
       estatisticas: {
         elementos: chaves1.length,
-        atributos: 0 // Simplificado para esta implementação
+        atributos: 0
       }
     };
   },
@@ -817,11 +802,9 @@ const xmlUtilsTool = {
     let xsd = `<?xml version="1.0" encoding="UTF-8"?>\n`;
     xsd += `<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">\n\n`;
 
-    // Elemento raiz
     const rootKey = Object.keys(obj)[0];
     xsd += `  <xs:element name="${rootKey}" type="${rootKey}Type"/>\n\n`;
 
-    // Definir tipos
     xsd += this.gerarTipoXsd(obj[rootKey], `${rootKey}Type`, '  ');
 
     xsd += `</xs:schema>`;
@@ -835,7 +818,7 @@ const xmlUtilsTool = {
 
     if (typeof obj === 'object' && obj !== null) {
       for (const [chave, valor] of Object.entries(obj)) {
-        if (chave === '$') continue; // Pular atributos
+        if (chave === '$') continue;
 
         const tipo = this.inferirTipoXsd(valor);
         if (tipo === 'complexType') {
@@ -848,7 +831,6 @@ const xmlUtilsTool = {
 
     xsd += `${indent}  </xs:sequence>\n`;
 
-    // Adicionar atributos se existirem
     if (obj && obj.$) {
       for (const [attrName] of Object.entries(obj.$)) {
         xsd += `${indent}  <xs:attribute name="${attrName}" type="xs:string"/>\n`;
@@ -857,7 +839,6 @@ const xmlUtilsTool = {
 
     xsd += `${indent}</xs:complexType>\n\n`;
 
-    // Gerar tipos complexos aninhados
     if (typeof obj === 'object' && obj !== null) {
       for (const [chave, valor] of Object.entries(obj)) {
         if (chave === '$') continue;

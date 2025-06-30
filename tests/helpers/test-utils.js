@@ -1,6 +1,5 @@
 const assert = require('assert');
 
-// Helper para validar estrutura de resposta MCP
 function validateMcpResponse(response) {
   assert(response, 'Response deve existir');
   assert(response.content, 'Response deve ter content');
@@ -10,7 +9,6 @@ function validateMcpResponse(response) {
   assert(response.content[0].text, 'Text não pode estar vazio');
 }
 
-// Helper para testar ferramentas
 async function testTool(tool, args, expectedIncludes) {
   const result = await tool.execute(args);
   validateMcpResponse(result);
@@ -23,7 +21,6 @@ async function testTool(tool, args, expectedIncludes) {
   return result;
 }
 
-// Helper para testar erros
 async function testToolError(tool, args, expectedErrorIncludes) {
   const result = await tool.execute(args);
   validateMcpResponse(result);

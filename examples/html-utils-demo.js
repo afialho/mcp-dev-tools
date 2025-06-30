@@ -1,19 +1,11 @@
 #!/usr/bin/env node
 
-/**
- * Demonstração da ferramenta HTML Utils
- * 
- * Este arquivo demonstra todas as funcionalidades da ferramenta HTML Utils
- * incluindo formatação, minificação, validação, conversão, sanitização e mais.
- */
-
 const htmlUtils = require('../tools/html-utils');
 
 async function demonstrarHtmlUtils() {
   console.log('🎨 DEMONSTRAÇÃO HTML UTILS - MCP DEV TOOLS\n');
   console.log('=' .repeat(60));
 
-  // HTML de exemplo para demonstrações
   const htmlExemplo = `
     <!DOCTYPE html>
     <html lang="pt-BR">
@@ -51,7 +43,6 @@ async function demonstrarHtmlUtils() {
   const htmlPerigoso = '<p>Texto seguro</p><script>alert("XSS")</script><div onclick="malicious()">Clique aqui</div>';
 
   try {
-    // 1. FORMATAÇÃO
     console.log('\n📝 1. FORMATAÇÃO HTML');
     console.log('-'.repeat(30));
     const formatResult = await htmlUtils.execute({
@@ -61,7 +52,6 @@ async function demonstrarHtmlUtils() {
     });
     console.log(formatResult.content[0].text);
 
-    // 2. MINIFICAÇÃO
     console.log('\n🗜️ 2. MINIFICAÇÃO HTML');
     console.log('-'.repeat(30));
     const minifyResult = await htmlUtils.execute({
@@ -71,7 +61,6 @@ async function demonstrarHtmlUtils() {
     });
     console.log(minifyResult.content[0].text);
 
-    // 3. VALIDAÇÃO
     console.log('\n✅ 3. VALIDAÇÃO HTML');
     console.log('-'.repeat(30));
     const validateResult = await htmlUtils.execute({
@@ -80,7 +69,6 @@ async function demonstrarHtmlUtils() {
     });
     console.log(validateResult.content[0].text);
 
-    // 4. CONVERSÃO PARA MARKDOWN
     console.log('\n🔄 4. CONVERSÃO HTML → MARKDOWN');
     console.log('-'.repeat(30));
     const convertResult = await htmlUtils.execute({
@@ -90,7 +78,6 @@ async function demonstrarHtmlUtils() {
     });
     console.log(convertResult.content[0].text);
 
-    // 5. CONVERSÃO PARA JSON
     console.log('\n📊 5. CONVERSÃO HTML → JSON');
     console.log('-'.repeat(30));
     const jsonResult = await htmlUtils.execute({
@@ -100,7 +87,6 @@ async function demonstrarHtmlUtils() {
     });
     console.log(jsonResult.content[0].text);
 
-    // 6. ESCAPE DE CARACTERES
     console.log('\n🔒 6. ESCAPE DE CARACTERES');
     console.log('-'.repeat(30));
     const escapeResult = await htmlUtils.execute({
@@ -109,7 +95,6 @@ async function demonstrarHtmlUtils() {
     });
     console.log(escapeResult.content[0].text);
 
-    // 7. EXTRAÇÃO DE ELEMENTOS
     console.log('\n🎯 7. EXTRAÇÃO DE ELEMENTOS');
     console.log('-'.repeat(30));
     const extractResult = await htmlUtils.execute({
@@ -119,7 +104,6 @@ async function demonstrarHtmlUtils() {
     });
     console.log(extractResult.content[0].text);
 
-    // 8. ANÁLISE COMPLETA
     console.log('\n📊 8. ANÁLISE COMPLETA');
     console.log('-'.repeat(30));
     const analyzeResult = await htmlUtils.execute({
@@ -131,7 +115,6 @@ async function demonstrarHtmlUtils() {
     });
     console.log(analyzeResult.content[0].text);
 
-    // 9. SANITIZAÇÃO
     console.log('\n🧹 9. SANITIZAÇÃO HTML');
     console.log('-'.repeat(30));
     const sanitizeResult = await htmlUtils.execute({
@@ -141,7 +124,6 @@ async function demonstrarHtmlUtils() {
     });
     console.log(sanitizeResult.content[0].text);
 
-    // 10. OTIMIZAÇÃO
     console.log('\n⚡ 10. OTIMIZAÇÃO HTML');
     console.log('-'.repeat(30));
     const optimizeResult = await htmlUtils.execute({
@@ -150,7 +132,6 @@ async function demonstrarHtmlUtils() {
     });
     console.log(optimizeResult.content[0].text);
 
-    // 11. GERAÇÃO DE TEMPLATES
     console.log('\n🏗️ 11. GERAÇÃO DE TEMPLATES');
     console.log('-'.repeat(30));
     const templateResult = await htmlUtils.execute({
@@ -159,7 +140,6 @@ async function demonstrarHtmlUtils() {
     });
     console.log(templateResult.content[0].text);
 
-    // 12. COMPARAÇÃO
     console.log('\n🔍 12. COMPARAÇÃO DE HTMLs');
     console.log('-'.repeat(30));
     const compareResult = await htmlUtils.execute({
@@ -169,7 +149,6 @@ async function demonstrarHtmlUtils() {
     });
     console.log(compareResult.content[0].text);
 
-    // 13. GERAÇÃO DE SCHEMA
     console.log('\n📋 13. GERAÇÃO DE SCHEMA');
     console.log('-'.repeat(30));
     const schemaResult = await htmlUtils.execute({
@@ -190,7 +169,6 @@ async function demonstrarHtmlUtils() {
   }
 }
 
-// Executar demonstração se chamado diretamente
 if (require.main === module) {
   demonstrarHtmlUtils();
 }

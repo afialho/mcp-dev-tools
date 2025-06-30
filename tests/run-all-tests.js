@@ -10,25 +10,21 @@ async function runAllTests() {
   console.log('');
 
   try {
-    // Executar testes das ferramentas individuais
     console.log('📦 TESTES DAS FERRAMENTAS INDIVIDUAIS');
     console.log('-'.repeat(50));
     await runAllToolsTests();
     console.log('');
 
-    // Executar testes dos utilitários
     console.log('🔧 TESTES DOS UTILITÁRIOS');
     console.log('-'.repeat(50));
     await runToolRegistryTests();
     console.log('');
 
-    // Executar testes de integração
     console.log('🖥️  TESTES DE INTEGRAÇÃO');
     console.log('-'.repeat(50));
     await runServerIntegrationTests();
     console.log('');
 
-    // Resumo final
     console.log('=' .repeat(70));
     console.log('🎉 TODOS OS TESTES PASSARAM COM SUCESSO!');
     console.log('');
@@ -49,7 +45,6 @@ async function runAllTests() {
   }
 }
 
-// Executar todos os testes
 if (require.main === module) {
   runAllTests();
 }

@@ -46,26 +46,20 @@ const base64UtilsTool = {
     required: ['operacao']
   },
 
-  // Validar se uma string é Base64 válida
   isValidBase64(str) {
     if (!str || typeof str !== 'string') return false;
     
-    // Remover quebras de linha e espaços
     const cleaned = str.replace(/[\r\n\s]/g, '');
     
-    // Verificar caracteres válidos
     const base64Regex = /^[A-Za-z0-9+/]*={0,2}$/;
     if (!base64Regex.test(cleaned)) return false;
     
-    // Verificar padding correto
     const paddingCount = (cleaned.match(/=/g) || []).length;
     if (paddingCount > 2) return false;
     
-    // Verificar se o comprimento é múltiplo de 4 (após padding)
     return cleaned.length % 4 === 0;
   },
 
-  // Validar se uma string é Base64 URL-safe válida
   isValidBase64Url(str) {
     if (!str || typeof str !== 'string') return false;
     
@@ -75,7 +69,6 @@ const base64UtilsTool = {
     return urlSafeRegex.test(cleaned);
   },
 
-  // Detectar tipo de Base64
   detectBase64Type(str) {
     if (!str) return 'invalid';
     
@@ -90,11 +83,9 @@ const base64UtilsTool = {
     return 'invalid';
   },
 
-  // Converter Base64 URL-safe para padrão
   urlSafeToStandard(str) {
     let result = str.replace(/-/g, '+').replace(/_/g, '/');
     
-    // Adicionar padding se necessário
     const padding = 4 - (result.length % 4);
     if (padding !== 4) {
       result += '='.repeat(padding);
@@ -103,12 +94,10 @@ const base64UtilsTool = {
     return result;
   },
 
-  // Converter Base64 padrão para URL-safe
   standardToUrlSafe(str) {
-    return str.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+    return str.replace(/\+/g, '-').replace(/\//g, '_');
   },
 
-  // Formatar Base64 com quebras de linha
   formatWithLineBreaks(str, width = 76) {
     const cleaned = str.replace(/[\r\n\s]/g, '');
     const lines = [];
@@ -120,7 +109,6 @@ const base64UtilsTool = {
     return lines.join('\n');
   },
 
-  // Analisar dados Base64
   analyzeBase64(str) {
     const cleaned = str.replace(/[\r\n\s]/g, '');
     const type = this.detectBase64Type(cleaned);
@@ -403,7 +391,6 @@ const base64UtilsTool = {
       const str = dados_base64[i];
       const analysis = this.analyzeBase64(str);
 
-      // Atualizar estatísticas
       if (analysis.isValid) {
         estatisticas.validos++;
         if (analysis.type === 'standard') estatisticas.standard++;

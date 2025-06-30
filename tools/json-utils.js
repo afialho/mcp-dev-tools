@@ -10,7 +10,6 @@ const jsonUtilsTool = {
         enum: ['formatar', 'validar', 'converter', 'analisar', 'extrair', 'comparar', 'gerar_schema', 'minificar', 'gerar', 'criar']
       },
       
-      // Para formatação e validação
       json_string: {
         type: 'string',
         description: 'String JSON para formatar/validar (não usado em converter)'
@@ -28,7 +27,6 @@ const jsonUtilsTool = {
         default: false
       },
       
-      // Para conversão
       dados_entrada: {
         description: 'Dados para converter para JSON (objeto, array, string, etc.)'
       },
@@ -43,13 +41,11 @@ const jsonUtilsTool = {
         description: 'Estrutura personalizada para organizar os dados convertidos'
       },
       
-      // Para validação com schema
       schema: {
         type: 'object',
         description: 'JSON Schema para validação (apenas para operação validar)'
       },
       
-      // Para análise e extração
       jsonpath: {
         type: 'string',
         description: 'Expressão JSONPath para extrair valores específicos'
@@ -60,13 +56,11 @@ const jsonUtilsTool = {
         default: false
       },
       
-      // Para comparação
       json_comparacao: {
         type: 'string',
         description: 'Segundo JSON para comparação (apenas para operação comparar)'
       },
       
-      // Para múltiplos JSONs
       jsons: {
         type: 'array',
         description: 'Array de strings JSON para operações em lote',
@@ -74,7 +68,6 @@ const jsonUtilsTool = {
         maxItems: 50
       },
       
-      // Opções gerais
       incluir_tipos: {
         type: 'boolean',
         description: 'Incluir informações de tipos na análise',
@@ -148,7 +141,6 @@ const jsonUtilsTool = {
           throw new Error(`Operação '${operacao}' não suportada`);
       }
       
-      // Preparar resposta com auto-display de JSON quando apropriado
       const respostaContent = [
         {
           type: 'text',
@@ -156,7 +148,6 @@ const jsonUtilsTool = {
         }
       ];
 
-      // Detectar e adicionar JSON em markdown automaticamente
       const jsonMarkdown = this.extrairJsonParaMarkdown(resultado, operacao);
       if (jsonMarkdown) {
         respostaContent.push({
@@ -181,7 +172,6 @@ const jsonUtilsTool = {
     }
   },
 
-  // Método para formatar JSON
   async formatarJson(jsonString, indentacao, ordenarChaves) {
     const jsonObj = JSON.parse(jsonString);
     
@@ -195,7 +185,6 @@ const jsonUtilsTool = {
     return `✅ **JSON Formatado**\n\n\`\`\`json\n${jsonFormatado}\n\`\`\``;
   },
 
-  // Método para validar JSON
   async validarJson(jsonString, schema) {
     try {
       const jsonObj = JSON.parse(jsonString);
@@ -210,7 +199,6 @@ const jsonUtilsTool = {
         resultado += `**Propriedades:** ${Object.keys(jsonObj).length}\n`;
       }
       
-      // Validação com schema se fornecido
       if (schema) {
         const validacao = this.validarComSchema(jsonObj, schema);
         resultado += `\n**Validação com Schema:** ${validacao.valido ? '✅ Válido' : '❌ Inválido'}\n`;
@@ -226,16 +214,13 @@ const jsonUtilsTool = {
     }
   },
 
-  // Método para converter dados para JSON
   async converterParaJson(dados, formatoOrigem, estruturaPersonalizada, indentacao, ordenarChaves) {
     let dadosConvertidos;
 
     if (estruturaPersonalizada) {
       dadosConvertidos = estruturaPersonalizada;
-      // Substituir placeholders na estrutura personalizada
       dadosConvertidos = this.substituirPlaceholders(dadosConvertidos, dados);
     } else {
-      // Conversão automática baseada no tipo
       if (typeof dados === 'string') {
         try {
           dadosConvertidos = JSON.parse(dados);
@@ -257,7 +242,6 @@ const jsonUtilsTool = {
     return `✅ **Dados Convertidos para JSON**\n\n\`\`\`json\n${jsonFormatado}\n\`\`\``;
   },
 
-  // Método para analisar JSON
   async analisarJson(jsonString, incluirEstatisticas, incluirTipos) {
     const jsonObj = JSON.parse(jsonString);
 
@@ -286,7 +270,6 @@ const jsonUtilsTool = {
     return resultado;
   },
 
-  // Método para extrair valores com JSONPath simplificado
   async extrairValores(jsonString, jsonpath) {
     const jsonObj = JSON.parse(jsonString);
 
@@ -309,7 +292,6 @@ const jsonUtilsTool = {
     return resultado;
   },
 
-  // Método para comparar JSONs
   async compararJsons(json1, json2) {
     const obj1 = JSON.parse(json1);
     const obj2 = JSON.parse(json2);
@@ -332,7 +314,6 @@ const jsonUtilsTool = {
     return resultado;
   },
 
-  // Método para gerar schema JSON
   async gerarSchema(jsonString) {
     const jsonObj = JSON.parse(jsonString);
     const schema = this.gerarSchemaRecursivo(jsonObj);
@@ -342,7 +323,6 @@ const jsonUtilsTool = {
     return `📋 **Schema JSON Gerado**\n\n\`\`\`json\n${schemaFormatado}\n\`\`\``;
   },
 
-  // Método para minificar JSON
   async minificarJson(jsonString) {
     const jsonObj = JSON.parse(jsonString);
     const jsonMinificado = JSON.stringify(jsonObj);
@@ -354,7 +334,6 @@ const jsonUtilsTool = {
     return `🗜️ **JSON Minificado**\n\n**Redução:** ${reducao}% (${tamanhoOriginal} → ${tamanhoMinificado} caracteres)\n\n\`\`\`json\n${jsonMinificado}\n\`\`\``;
   },
 
-  // Métodos auxiliares
   ordenarChavesRecursivo(obj) {
     if (Array.isArray(obj)) {
       return obj.map(item => this.ordenarChavesRecursivo(item));
@@ -423,7 +402,6 @@ const jsonUtilsTool = {
   },
 
   extrairComJsonPath(obj, path) {
-    // JSONPath simplificado - suporte básico para caminhos como $.propriedade, $.array[*], etc.
     const caminhos = path.replace(/^\$\.?/, '').split('.');
     let resultados = [obj];
 
@@ -537,7 +515,6 @@ const jsonUtilsTool = {
   },
 
   validarComSchema(obj, schema) {
-    // Validação básica de schema - implementação simplificada
     const erros = [];
 
     if (schema.type && typeof obj !== schema.type) {
@@ -577,9 +554,7 @@ const jsonUtilsTool = {
     return 'Posição não identificada';
   },
 
-  // Método para extrair JSON e criar markdown automático
   extrairJsonParaMarkdown(resultado, operacao) {
-    // Extrair JSON dos blocos de código
     const regexJson = /```json\n([\s\S]*?)\n```/g;
     const matches = [...resultado.matchAll(regexJson)];
 
@@ -587,16 +562,12 @@ const jsonUtilsTool = {
       return null;
     }
 
-    // Pegar o primeiro JSON encontrado (geralmente é o principal)
     const jsonContent = matches[0][1];
 
-    // Verificar se é JSON válido
     try {
       JSON.parse(jsonContent);
-      // Retornar JSON em markdown puro (sem blocos da ferramenta)
       return `\`\`\`json\n${jsonContent}\n\`\`\``;
     } catch (error) {
-      // Se não for JSON válido, não retornar nada
       return null;
     }
   }

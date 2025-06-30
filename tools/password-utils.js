@@ -88,7 +88,6 @@ const passwordUtilsTool = {
     required: ['operacao']
   },
 
-  // Conjuntos de caracteres
   CHARSETS: {
     lowercase: 'abcdefghijklmnopqrstuvwxyz',
     uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
@@ -97,7 +96,6 @@ const passwordUtilsTool = {
     ambiguous: '0O1lI|`'
   },
 
-  // Lista de palavras para frases-senha
   PALAVRAS_FRASE: [
     'casa', 'gato', 'sol', 'mar', 'lua', 'flor', 'rio', 'paz', 'luz', 'cor',
     'vida', 'amor', 'tempo', 'mundo', 'terra', 'agua', 'fogo', 'vento', 'ceu', 'estrela',
@@ -111,7 +109,6 @@ const passwordUtilsTool = {
     'comida', 'pao', 'leite', 'cafe', 'cha', 'fruta', 'carne', 'peixe', 'arroz', 'feijao'
   ],
 
-  // Senhas comuns para verificação
   SENHAS_COMUNS: [
     '123456', 'password', '123456789', '12345678', '12345', '1234567', '1234567890',
     'qwerty', 'abc123', 'password123', 'admin', 'letmein', 'welcome', 'monkey',
@@ -151,7 +148,6 @@ const passwordUtilsTool = {
     }
   },
 
-  // Gerar conjunto de caracteres baseado no tipo
   obterConjuntoCaracteres(tipo, opcoes = {}) {
     let charset = '';
     
@@ -174,7 +170,6 @@ const passwordUtilsTool = {
         break;
     }
 
-    // Remover caracteres ambíguos se solicitado
     if (opcoes.excluir_ambiguos) {
       for (const char of this.CHARSETS.ambiguous) {
         charset = charset.replace(new RegExp(char, 'g'), '');
@@ -184,7 +179,6 @@ const passwordUtilsTool = {
     return charset;
   },
 
-  // Gerar senha aleatória
   gerarSenha(comprimento, charset) {
     if (!charset || charset.length === 0) {
       throw new Error('Conjunto de caracteres vazio');
@@ -201,7 +195,6 @@ const passwordUtilsTool = {
     return senha;
   },
 
-  // Garantir que a senha tenha pelo menos um caractere de cada tipo necessário
   garantirDiversidade(senha, tipo, opcoes = {}) {
     const tipos = [];
     
@@ -229,7 +222,6 @@ const passwordUtilsTool = {
         break;
     }
 
-    // Verificar se tem pelo menos um de cada tipo
     for (const tipoChar of tipos) {
       let temTipo = false;
       for (const char of senha) {
@@ -239,7 +231,6 @@ const passwordUtilsTool = {
         }
       }
       
-      // Se não tem, substituir um caractere aleatório
       if (!temTipo && senha.length > tipos.length) {
         const posicao = Math.floor(Math.random() * senha.length);
         const novoChar = tipoChar.chars[Math.floor(Math.random() * tipoChar.chars.length)];
@@ -250,7 +241,6 @@ const passwordUtilsTool = {
     return senha;
   },
 
-  // Executar geração de senhas
   executarGeracao(args) {
     const {
       quantidade = 1,
@@ -287,7 +277,6 @@ const passwordUtilsTool = {
     for (let i = 0; i < quantidade; i++) {
       let senha = this.gerarSenha(comprimento, charset);
 
-      // Garantir diversidade para tipos que precisam
       if (['forte', 'media', 'personalizada'].includes(tipo)) {
         senha = this.garantirDiversidade(senha, tipo, opcoes);
       }
@@ -316,7 +305,6 @@ const passwordUtilsTool = {
     };
   },
 
-  // Executar análise de segurança
   executarAnalise(args) {
     const { senhas } = args;
 
@@ -330,7 +318,6 @@ const passwordUtilsTool = {
     }
 
     if (senhas.length === 1) {
-      // Análise detalhada de uma senha
       const analise = this.analisarSenha(senhas[0]);
       return {
         content: [{
@@ -339,7 +326,6 @@ const passwordUtilsTool = {
         }]
       };
     } else {
-      // Análise resumida de múltiplas senhas
       const analises = senhas.map(senha => this.analisarSenha(senha));
       return {
         content: [{
@@ -350,7 +336,6 @@ const passwordUtilsTool = {
     }
   },
 
-  // Executar validação em lote
   executarValidacao(args) {
     const { senhas } = args;
 
@@ -393,7 +378,6 @@ const passwordUtilsTool = {
     };
   },
 
-  // Executar geração de frase-senha
   executarGeracaoFrase(args) {
     const {
       quantidade = 1,
@@ -409,7 +393,6 @@ const passwordUtilsTool = {
       const palavras = [];
       const palavrasUsadas = new Set();
 
-      // Selecionar palavras únicas aleatoriamente
       while (palavras.length < palavras_frase) {
         const palavra = this.PALAVRAS_FRASE[Math.floor(Math.random() * this.PALAVRAS_FRASE.length)];
         if (!palavrasUsadas.has(palavra)) {
@@ -418,13 +401,11 @@ const passwordUtilsTool = {
         }
       }
 
-      // Adicionar números se solicitado
       if (incluir_numeros_frase) {
-        const numero = Math.floor(Math.random() * 1000); // 0-999
+        const numero = Math.floor(Math.random() * 1000);
         palavras.push(numero.toString());
       }
 
-      // Adicionar símbolo se solicitado
       if (incluir_simbolos_frase) {
         const simbolos = ['!', '@', '#', '$', '%', '&', '*'];
         const simbolo = simbolos[Math.floor(Math.random() * simbolos.length)];
@@ -449,7 +430,6 @@ const passwordUtilsTool = {
     };
   },
 
-  // Executar verificação de vazamentos
   async executarVerificacaoVazamentos(args) {
     const { senhas } = args;
 
@@ -491,7 +471,6 @@ const passwordUtilsTool = {
     };
   },
 
-  // Analisar segurança de uma senha
   analisarSenha(senha) {
     const analise = {
       senha: senha,
@@ -510,26 +489,20 @@ const passwordUtilsTool = {
       problemas: []
     };
 
-    // Calcular entropia
     const espacoCaracteres = this.calcularEspacoCaracteres(analise);
     analise.entropia = this.calcularEntropia(senha, espacoCaracteres);
 
-    // Calcular pontuação
     analise.pontuacao = this.calcularPontuacao(analise);
 
-    // Determinar força
     analise.forca = this.determinarForca(analise.pontuacao);
 
-    // Calcular tempo para quebrar
     analise.tempoQuebrar = this.calcularTempoQuebrar(analise.entropia);
 
-    // Identificar problemas
     analise.problemas = this.identificarProblemas(analise);
 
     return analise;
   },
 
-  // Calcular espaço de caracteres baseado no que a senha contém
   calcularEspacoCaracteres(analise) {
     let espaco = 0;
     if (analise.temMinuscula) espaco += 26;
@@ -539,32 +512,28 @@ const passwordUtilsTool = {
     return Math.max(espaco, 1);
   },
 
-  // Calcular entropia em bits
   calcularEntropia(senha, espacoCaracteres) {
     return Math.log2(Math.pow(espacoCaracteres, senha.length));
   },
 
-  // Calcular entropia para frases-senha
   calcularEntropiaFrase(numPalavras, tamanhoDicionario) {
     return Math.log2(Math.pow(tamanhoDicionario, numPalavras));
   },
 
-  // Calcular entropia para frases-senha completas (com números e símbolos)
   calcularEntropiaFraseCompleta(numPalavras, incluirNumeros, incluirSimbolos) {
     let entropia = Math.log2(Math.pow(this.PALAVRAS_FRASE.length, numPalavras));
 
     if (incluirNumeros) {
-      entropia += Math.log2(1000); // 0-999
+      entropia += Math.log2(1000);
     }
 
     if (incluirSimbolos) {
-      entropia += Math.log2(7); // 7 símbolos disponíveis
+      entropia += Math.log2(7);
     }
 
     return entropia;
   },
 
-  // Verificar se tem sequências
   temSequencia(senha) {
     const sequencias = ['123', '234', '345', '456', '567', '678', '789', '890',
                        'abc', 'bcd', 'cde', 'def', 'efg', 'fgh', 'ghi', 'hij',
@@ -574,23 +543,18 @@ const passwordUtilsTool = {
     return sequencias.some(seq => senhaLower.includes(seq) || senhaLower.includes(seq.split('').reverse().join('')));
   },
 
-  // Verificar se tem repetições
   temRepeticao(senha) {
-    // Verifica se tem 3 ou mais caracteres iguais consecutivos
     return /(.)\1{2,}/.test(senha);
   },
 
-  // Calcular pontuação de 0-100
   calcularPontuacao(analise) {
     let pontos = 0;
 
-    // Pontos por comprimento (25 pontos máximo)
     if (analise.comprimento >= 12) pontos += 25;
     else if (analise.comprimento >= 8) pontos += 15;
     else if (analise.comprimento >= 6) pontos += 10;
     else pontos += 5;
 
-    // Pontos por diversidade (25 pontos máximo)
     let diversidade = 0;
     if (analise.temMinuscula) diversidade += 6;
     if (analise.temMaiuscula) diversidade += 6;
@@ -598,14 +562,12 @@ const passwordUtilsTool = {
     if (analise.temSimbolo) diversidade += 7;
     pontos += diversidade;
 
-    // Pontos por ausência de padrões (25 pontos máximo)
     let padroes = 25;
     if (analise.temSequencia) padroes -= 10;
     if (analise.temRepeticao) padroes -= 10;
     if (analise.eComum) padroes -= 15;
     pontos += Math.max(padroes, 0);
 
-    // Pontos por entropia (25 pontos máximo)
     if (analise.entropia >= 60) pontos += 25;
     else if (analise.entropia >= 40) pontos += 20;
     else if (analise.entropia >= 30) pontos += 15;
@@ -615,7 +577,6 @@ const passwordUtilsTool = {
     return Math.min(pontos, 100);
   },
 
-  // Determinar força baseada na pontuação
   determinarForca(pontuacao) {
     if (pontuacao >= 90) return '🟢 Muito Forte';
     if (pontuacao >= 80) return '🟢 Forte';
@@ -624,11 +585,9 @@ const passwordUtilsTool = {
     return '🔴 Muito Fraca';
   },
 
-  // Calcular tempo estimado para quebrar
   calcularTempoQuebrar(entropia) {
-    // Assumindo 1 bilhão de tentativas por segundo
     const tentativasPorSegundo = 1e9;
-    const tentativasTotal = Math.pow(2, entropia - 1); // Média de tentativas
+    const tentativasTotal = Math.pow(2, entropia - 1);
     const segundos = tentativasTotal / tentativasPorSegundo;
 
     if (segundos < 60) return `${segundos.toFixed(1)} segundos`;
@@ -642,7 +601,6 @@ const passwordUtilsTool = {
     return `${anos.toExponential(1)} anos`;
   },
 
-  // Identificar problemas na senha
   identificarProblemas(analise) {
     const problemas = [];
 
@@ -658,17 +616,14 @@ const passwordUtilsTool = {
     return problemas;
   },
 
-  // Verificar se senha foi vazada usando HaveIBeenPwned API
   async verificarVazamento(senha) {
     const crypto = require('crypto');
 
-    // Gerar hash SHA-1 da senha
     const hash = crypto.createHash('sha1').update(senha).digest('hex').toUpperCase();
     const prefixo = hash.substring(0, 5);
     const sufixo = hash.substring(5);
 
     try {
-      // Fazer requisição para a API HaveIBeenPwned
       const response = await fetch(`https://api.pwnedpasswords.com/range/${prefixo}`, {
         method: 'GET',
         headers: {
@@ -683,7 +638,6 @@ const passwordUtilsTool = {
       const data = await response.text();
       const linhas = data.split('\n');
 
-      // Procurar pelo sufixo do hash
       for (const linha of linhas) {
         const [hashSufixo, count] = linha.split(':');
         if (hashSufixo === sufixo) {
@@ -700,12 +654,10 @@ const passwordUtilsTool = {
       };
 
     } catch (error) {
-      // Se não conseguir acessar a API, retorna como não verificado
       throw new Error(`Não foi possível verificar: ${error.message}`);
     }
   },
 
-  // Formatar resultado da verificação de vazamentos
   formatarVerificacaoVazamentos(verificacoes) {
     let resultado = `🔍 **Verificação de Vazamentos**\n\n`;
 
@@ -721,7 +673,6 @@ const passwordUtilsTool = {
     }
     resultado += '\n';
 
-    // Detalhar senhas vazadas
     if (vazadas.length > 0) {
       resultado += `**🚨 Senhas Vazadas Detectadas:**\n`;
       vazadas.forEach((verificacao, index) => {
@@ -731,7 +682,6 @@ const passwordUtilsTool = {
       resultado += '\n';
     }
 
-    // Detalhar erros se houver
     if (erros.length > 0) {
       resultado += `**⚠️ Senhas Não Verificadas:**\n`;
       erros.forEach((verificacao, index) => {
@@ -741,7 +691,6 @@ const passwordUtilsTool = {
       resultado += '\n';
     }
 
-    // Recomendação
     if (vazadas.length > 0) {
       resultado += `🔴 **URGENTE:** Troque imediatamente as senhas vazadas!`;
     } else if (seguras.length === verificacoes.length) {
@@ -753,7 +702,6 @@ const passwordUtilsTool = {
     return resultado;
   },
 
-  // Formatar análise detalhada para uma senha
   formatarAnaliseDetalhada(analise) {
     const senhaOculta = '•'.repeat(analise.senha.length);
 
@@ -780,7 +728,6 @@ const passwordUtilsTool = {
     return resultado;
   },
 
-  // Formatar análise múltipla
   formatarAnaliseMultipla(analises) {
     let resultado = `🔍 **Análise de Múltiplas Senhas**\n\n`;
 
@@ -798,7 +745,6 @@ const passwordUtilsTool = {
     return resultado;
   },
 
-  // Obter recomendação baseada nas análises
   obterRecomendacao(analises) {
     const fracas = analises.filter(a => a.pontuacao < 60).length;
     const total = analises.length;

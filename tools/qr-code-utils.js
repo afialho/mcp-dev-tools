@@ -93,10 +93,8 @@ const qrCodeUtilsTool = {
     }
 
     try {
-      // Processar dados baseado no tipo
       let dadosProcessados = this.processarDados(dados, tipo);
 
-      // Configurações do QR Code
       const opcoes = {
         errorCorrectionLevel: correcao_erro,
         type: formato === 'png_base64' ? 'image/png' : 'svg',
@@ -113,15 +111,12 @@ const qrCodeUtilsTool = {
       let conteudoQR;
 
       if (formato === 'terminal') {
-        // QR Code no terminal
         conteudoQR = await QRCode.toString(dadosProcessados, { type: 'terminal', small: true });
         resultado = `📱 **QR Code Gerado (Terminal)**\n\n**Tipo:** ${tipo.toUpperCase()}\n**Dados:** \`${dados}\`\n\n\`\`\`\n${conteudoQR}\`\`\`\n\n✅ QR Code gerado com sucesso!`;
       } else if (formato === 'svg') {
-        // QR Code SVG
         conteudoQR = await QRCode.toString(dadosProcessados, opcoes);
         resultado = `📱 **QR Code Gerado (SVG)**\n\n**Tipo:** ${tipo.toUpperCase()}\n**Dados:** \`${dados}\`\n**Correção de Erro:** ${correcao_erro}\n**Margem:** ${margem}\n\n\`\`\`svg\n${conteudoQR}\`\`\`\n\n✅ QR Code SVG gerado com sucesso!`;
       } else if (formato === 'png_base64') {
-        // QR Code PNG em Base64
         conteudoQR = await QRCode.toDataURL(dadosProcessados, opcoes);
         resultado = `📱 **QR Code Gerado (PNG Base64)**\n\n**Tipo:** ${tipo.toUpperCase()}\n**Dados:** \`${dados}\`\n**Tamanho:** ${tamanho}px\n**Correção de Erro:** ${correcao_erro}\n\n**Base64:**\n\`\`\`\n${conteudoQR}\`\`\`\n\n✅ QR Code PNG gerado com sucesso!`;
       }
@@ -143,37 +138,31 @@ const qrCodeUtilsTool = {
   processarDados(dados, tipo) {
     switch (tipo) {
       case 'url':
-        // Validar e processar URL
         if (!dados.startsWith('http://') && !dados.startsWith('https://')) {
           return `https://${dados}`;
         }
         return dados;
 
       case 'email':
-        // Formato mailto
         if (!dados.startsWith('mailto:')) {
           return `mailto:${dados}`;
         }
         return dados;
 
       case 'telefone':
-        // Formato tel
         if (!dados.startsWith('tel:')) {
           return `tel:${dados}`;
         }
         return dados;
 
       case 'sms':
-        // Formato SMS
         if (!dados.startsWith('sms:')) {
           return `sms:${dados}`;
         }
         return dados;
 
       case 'wifi':
-        // Formato WiFi: WIFI:T:WPA;S:mynetwork;P:mypass;H:false;
         if (!dados.startsWith('WIFI:')) {
-          // Assumir formato simples: nome,senha,tipo
           const partes = dados.split(',');
           if (partes.length >= 2) {
             const [nome, senha, tipo = 'WPA'] = partes;
@@ -183,9 +172,7 @@ const qrCodeUtilsTool = {
         return dados;
 
       case 'vcard':
-        // Formato vCard simples
         if (!dados.startsWith('BEGIN:VCARD')) {
-          // Assumir formato simples: nome,telefone,email
           const partes = dados.split(',');
           if (partes.length >= 1) {
             const [nome, telefone = '', email = ''] = partes;

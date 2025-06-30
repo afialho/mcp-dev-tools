@@ -10,7 +10,6 @@ const dateUtilsTool = {
         description: 'Operação: gerar datas/timestamps, validar formatos, converter entre formatos/fusos, calcular diferenças/idades, formatar apresentação, analisar informações'
       },
       
-      // Parâmetros para GERAR
       tipo: {
         type: 'string',
         enum: ['agora', 'timestamp', 'data_aleatoria', 'hora_aleatoria', 'sequencia_datas', 'sequencia_horarios', 'dias_uteis', 'fins_semana'],
@@ -62,7 +61,6 @@ const dateUtilsTool = {
         description: 'Intervalo em horas para sequências de horário'
       },
       
-      // Parâmetros para VALIDAR, CONVERTER, FORMATAR, ANALISAR
       datas: {
         type: 'array',
         items: { type: 'string' },
@@ -70,7 +68,6 @@ const dateUtilsTool = {
         description: 'Lista de datas para validar/converter/formatar/analisar'
       },
       
-      // Parâmetros para VALIDAR
       tipo_validacao: {
         type: 'string',
         enum: ['formato', 'intervalo', 'dia_util', 'feriado', 'bissexto', 'futuro', 'passado'],
@@ -92,7 +89,6 @@ const dateUtilsTool = {
         description: 'Data máxima para validação de intervalo (YYYY-MM-DD)'
       },
       
-      // Parâmetros para CONVERTER
       tipo_conversao: {
         type: 'string',
         enum: ['formato', 'fuso_horario', 'timestamp', 'relativo'],
@@ -122,7 +118,6 @@ const dateUtilsTool = {
         description: 'Fuso horário de destino'
       },
       
-      // Parâmetros para CALCULAR
       tipo_calculo: {
         type: 'string',
         enum: ['diferenca', 'adicionar', 'subtrair', 'idade', 'dias_uteis', 'proximo_dia_util', 'fim_mes'],
@@ -153,7 +148,6 @@ const dateUtilsTool = {
         description: 'Incluir feriados nos cálculos'
       },
       
-      // Parâmetros para FORMATAR
       formato: {
         type: 'string',
         enum: ['iso', 'brasileiro', 'americano', 'extenso', 'customizado', 'relativo'],
@@ -180,7 +174,6 @@ const dateUtilsTool = {
         description: 'Idioma para formatação (pt-BR, en-US)'
       },
       
-      // Parâmetros para ANALISAR
       tipo_analise: {
         type: 'string',
         enum: ['completa', 'calendario', 'estatisticas', 'padroes'],
@@ -193,7 +186,6 @@ const dateUtilsTool = {
         description: 'Incluir informações astronômicas (fases da lua, estações)'
       },
       
-      // Parâmetros gerais
       formato_saida: {
         type: 'string',
         enum: ['iso', 'brasileiro', 'americano', 'timestamp'],
@@ -209,7 +201,6 @@ const dateUtilsTool = {
     required: ['operacao']
   },
 
-  // Feriados nacionais brasileiros (datas fixas)
   feriadosFixos: {
     '01-01': 'Confraternização Universal',
     '04-21': 'Tiradentes',
@@ -221,7 +212,6 @@ const dateUtilsTool = {
     '12-25': 'Natal'
   },
 
-  // Detectar formato de data
   detectarFormato(data) {
     const formatos = [
       { regex: /^\d{4}-\d{2}-\d{2}$/, tipo: 'iso' },
@@ -239,7 +229,6 @@ const dateUtilsTool = {
     return 'desconhecido';
   },
 
-  // Normalizar data para objeto Date
   normalizarData(data, formato = 'auto') {
     if (formato === 'auto') {
       formato = this.detectarFormato(data);
@@ -248,7 +237,6 @@ const dateUtilsTool = {
     try {
       switch (formato) {
         case 'iso':
-          // Para datas ISO, usar construtor local para evitar problemas de fuso horário
           if (data.includes('T')) {
             return new Date(data);
           } else {
@@ -273,16 +261,14 @@ const dateUtilsTool = {
     }
   },
 
-  // Verificar se é dia útil
   isDiaUtil(data) {
     const date = typeof data === 'string' ? this.normalizarData(data) : data;
     if (!date) return false;
     
     const diaSemana = date.getDay();
-    return diaSemana >= 1 && diaSemana <= 5; // Segunda a sexta
+    return diaSemana >= 1 && diaSemana <= 5;
   },
 
-  // Verificar se é feriado nacional brasileiro
   isFeriado(data) {
     const date = typeof data === 'string' ? this.normalizarData(data) : data;
     if (!date) return false;
@@ -294,7 +280,6 @@ const dateUtilsTool = {
     return this.feriadosFixos.hasOwnProperty(chave);
   },
 
-  // Calcular Páscoa (para feriados móveis)
   calcularPascoa(ano) {
     const a = ano % 19;
     const b = Math.floor(ano / 100);
@@ -314,7 +299,6 @@ const dateUtilsTool = {
     return new Date(ano, n - 1, p + 1);
   },
 
-  // OPERAÇÃO: GERAR
   executarGeracao(args) {
     const {
       tipo = 'agora',
@@ -355,7 +339,7 @@ const dateUtilsTool = {
             const dataAleatoria = new Date(inicio.getTime() + Math.random() * (fim.getTime() - inicio.getTime()));
 
             if (apenas_dias_uteis && !this.isDiaUtil(dataAleatoria)) {
-              i--; // Tentar novamente
+              i--;
               continue;
             }
 
@@ -370,7 +354,7 @@ const dateUtilsTool = {
             data.setDate(dataInicio.getDate() + (i * intervalo_dias));
 
             if (apenas_dias_uteis && !this.isDiaUtil(data)) {
-              quantidade++; // Compensar dias não úteis
+              quantidade++;
               continue;
             }
 
@@ -421,7 +405,6 @@ const dateUtilsTool = {
     }
   },
 
-  // OPERAÇÃO: VALIDAR
   executarValidacao(args) {
     const {
       datas = [],
@@ -476,7 +459,6 @@ const dateUtilsTool = {
     }
   },
 
-  // Métodos auxiliares
   formatarDataSaida(data, formato) {
     switch (formato) {
       case 'iso':
@@ -502,7 +484,6 @@ const dateUtilsTool = {
       formato_detectado: null
     };
 
-    // Detectar formato
     const formato = this.detectarFormato(data);
     resultado.formato_detectado = formato;
 
@@ -511,14 +492,12 @@ const dateUtilsTool = {
       return resultado;
     }
 
-    // Normalizar data
     const dateObj = this.normalizarData(data, formato);
     if (!dateObj || isNaN(dateObj.getTime())) {
       resultado.mensagem = 'Data inválida';
       return resultado;
     }
 
-    // Validações específicas
     switch (tipo) {
       case 'formato':
         if (formato_esperado === 'auto' || formato === formato_esperado) {
@@ -599,7 +578,6 @@ const dateUtilsTool = {
     return `${mes}-${dia}`;
   },
 
-  // OPERAÇÃO: CONVERTER
   executarConversao(args) {
     const {
       datas = [],
@@ -667,7 +645,6 @@ const dateUtilsTool = {
     }
   },
 
-  // OPERAÇÃO: CALCULAR
   executarCalculo(args) {
     const {
       tipo_calculo,
@@ -762,7 +739,6 @@ const dateUtilsTool = {
     }
   },
 
-  // Métodos auxiliares para cálculos
   formatarRelativo(data) {
     const agora = new Date();
     const diff = agora.getTime() - data.getTime();
@@ -880,7 +856,6 @@ const dateUtilsTool = {
     return resultados.join('\n');
   },
 
-  // OPERAÇÃO: FORMATAR
   executarFormatacao(args) {
     const {
       datas = [],
@@ -955,7 +930,6 @@ const dateUtilsTool = {
     }
   },
 
-  // OPERAÇÃO: ANALISAR
   executarAnalise(args) {
     const {
       datas = [],
@@ -1005,7 +979,6 @@ const dateUtilsTool = {
     }
   },
 
-  // Métodos auxiliares para formatação
   formatarExtenso(data, idioma) {
     const meses = {
       'pt-BR': ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
@@ -1031,7 +1004,6 @@ const dateUtilsTool = {
       .replace('ss', String(data.getSeconds()).padStart(2, '0'));
   },
 
-  // Métodos auxiliares para análise
   analisarCompleta(data) {
     const dateObj = this.normalizarData(data);
     if (!dateObj) {
@@ -1086,7 +1058,6 @@ const dateUtilsTool = {
       .join('\n');
   },
 
-  // Métodos auxiliares adicionais
   obterDiaDoAno(data) {
     const inicio = new Date(data.getFullYear(), 0, 0);
     const diff = data - inicio;

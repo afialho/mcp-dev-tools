@@ -74,7 +74,6 @@ const creditCardUtilsTool = {
     required: ['operacao']
   },
 
-  // Configurações das bandeiras com IINs reais de 6-8 dígitos
   bandeiras: {
     visa: {
       nome: 'Visa',
@@ -120,17 +119,14 @@ const creditCardUtilsTool = {
     }
   },
 
-  // Inicializar prefixos do Mastercard
   inicializarPrefixos() {
     if (this.bandeiras.mastercard.prefixos.length === 0) {
       const prefixos = [];
 
-      // Série 2: 222100-272099 (amostra representativa)
       for (let i = 222100; i <= 272099; i += 500) {
         prefixos.push(i.toString());
       }
 
-      // Série 5: 510000-559999 (amostra representativa)
       for (let i = 510000; i <= 559999; i += 1000) {
         prefixos.push(i.toString());
       }
@@ -139,7 +135,6 @@ const creditCardUtilsTool = {
     }
   },
 
-  // Algoritmo de Luhn para validação
   validarLuhn(numero) {
     const numeroLimpo = numero.replace(/[^\d]/g, '');
     let soma = 0;
@@ -162,12 +157,10 @@ const creditCardUtilsTool = {
     return soma % 10 === 0;
   },
 
-  // Identificar bandeira do cartão (ordenado por comprimento de prefixo decrescente)
   identificarBandeira(numero) {
     const numeroLimpo = numero.replace(/[^\d]/g, '');
     this.inicializarPrefixos();
 
-    // Criar lista de todos os prefixos com suas bandeiras, ordenados por comprimento decrescente
     const todosPrefixos = [];
     for (const [codigo, config] of Object.entries(this.bandeiras)) {
       for (const prefixo of config.prefixos) {
@@ -175,10 +168,8 @@ const creditCardUtilsTool = {
       }
     }
 
-    // Ordenar por comprimento decrescente para resolver ambiguidades
     todosPrefixos.sort((a, b) => b.prefixo.length - a.prefixo.length);
 
-    // Verificar cada prefixo
     for (const item of todosPrefixos) {
       if (numeroLimpo.startsWith(item.prefixo) && item.config.comprimentos.includes(numeroLimpo.length)) {
         return item.codigo;
@@ -188,10 +179,9 @@ const creditCardUtilsTool = {
     return null;
   },
 
-  // Calcular dígito verificador Luhn
   calcularDigitoLuhn(numero) {
     let soma = 0;
-    let alternar = true; // Começar com true para o dígito verificador
+    let alternar = true;
 
     for (let i = numero.length - 1; i >= 0; i--) {
       let digito = parseInt(numero[i]);
@@ -210,25 +200,21 @@ const creditCardUtilsTool = {
     return (10 - (soma % 10)) % 10;
   },
 
-  // Gerar número de cartão válido
   gerarNumero(bandeira) {
     this.inicializarPrefixos();
     const config = this.bandeiras[bandeira];
     const prefixo = config.prefixos[Math.floor(Math.random() * config.prefixos.length)];
     const comprimento = config.comprimentos[Math.floor(Math.random() * config.comprimentos.length)];
 
-    // Gerar dígitos aleatórios até comprimento - 1 (deixando espaço para dígito verificador)
     let numero = prefixo;
     while (numero.length < comprimento - 1) {
       numero += Math.floor(Math.random() * 10);
     }
 
-    // Calcular e adicionar dígito verificador
     const digitoVerificador = this.calcularDigitoLuhn(numero);
     return numero + digitoVerificador;
   },
 
-  // Gerar CVV
   gerarCVV(bandeira) {
     const config = this.bandeiras[bandeira];
     const length = config.cvvLength;
@@ -237,7 +223,6 @@ const creditCardUtilsTool = {
     return Math.floor(Math.random() * (max - min + 1) + min).toString();
   },
 
-  // Gerar data de expiração
   gerarDataExpiracao(tipo, anosFuturo, anosPassado, formato) {
     const hoje = new Date();
     let ano, mes;
@@ -248,7 +233,7 @@ const creditCardUtilsTool = {
     } else if (tipo === 'vencida') {
       ano = hoje.getFullYear() - Math.floor(Math.random() * anosPassado) - 1;
       mes = Math.floor(Math.random() * 12) + 1;
-    } else { // mista
+    } else {
       const isFutura = Math.random() > 0.5;
       if (isFutura) {
         ano = hoje.getFullYear() + Math.floor(Math.random() * anosFuturo) + 1;
@@ -258,7 +243,6 @@ const creditCardUtilsTool = {
       mes = Math.floor(Math.random() * 12) + 1;
     }
     
-    // Formatar conforme solicitado
     const mesFormatado = mes.toString().padStart(2, '0');
     
     switch (formato) {
@@ -266,12 +250,11 @@ const creditCardUtilsTool = {
         return `${mesFormatado}/${ano}`;
       case 'YYYY-MM':
         return `${ano}-${mesFormatado}`;
-      default: // MM/YY
+      default:
         return `${mesFormatado}/${ano.toString().slice(-2)}`;
     }
   },
 
-  // Verificar se data está vencida
   isDataVencida(dataExpiracao) {
     const hoje = new Date();
     let ano, mes;
@@ -286,12 +269,10 @@ const creditCardUtilsTool = {
       mes = parseInt(mesStr);
     }
     
-    // Último dia do mês de expiração
     const dataCartao = new Date(ano, mes, 0);
     return dataCartao < hoje;
   },
 
-  // Formatar número com máscara
   formatarComMascara(numero, bandeira) {
     const numeroLimpo = numero.replace(/[^\d]/g, '');
     const config = this.bandeiras[bandeira];
@@ -347,7 +328,6 @@ const creditCardUtilsTool = {
     }
   },
 
-  // Executar geração de cartões
   executarGeracao(args) {
     const {
       bandeira = 'aleatorio',
@@ -364,21 +344,17 @@ const creditCardUtilsTool = {
     const cartoesGerados = [];
 
     for (let i = 0; i < quantidade; i++) {
-      // Escolher bandeira
       const bandeiraEscolhida = bandeira === 'aleatorio'
         ? Object.keys(this.bandeiras)[Math.floor(Math.random() * Object.keys(this.bandeiras).length)]
         : bandeira;
 
-      // Gerar número
       const numero = this.gerarNumero(bandeiraEscolhida);
       const numeroFormatado = formato === 'com_mascara'
         ? this.formatarComMascara(numero, bandeiraEscolhida)
         : numero;
 
-      // Gerar CVV se solicitado
       const cvv = incluir_cvv ? this.gerarCVV(bandeiraEscolhida) : null;
 
-      // Gerar data se solicitada
       const dataExpiracao = incluir_data
         ? this.gerarDataExpiracao(tipo_data, anos_futuro, anos_passado, formato_data)
         : null;
@@ -395,7 +371,6 @@ const creditCardUtilsTool = {
       });
     }
 
-    // Montar resultado
     const titulo = `💳 **Cartões Gerados${bandeira !== 'aleatorio' ? ` - ${this.bandeiras[bandeira].nome}` : ''}**\n\n`;
 
     const listaCartoes = cartoesGerados.map((cartao, index) => {
@@ -414,7 +389,6 @@ const creditCardUtilsTool = {
       return linha;
     }).join('\n\n');
 
-    // Estatísticas
     const bandeirasCount = {};
     const statusCount = { futuro: 0, vencido: 0 };
 
@@ -446,7 +420,6 @@ const creditCardUtilsTool = {
     };
   },
 
-  // Executar validação de cartões
   executarValidacao(args) {
     const { numeros = [] } = args;
 
@@ -494,7 +467,6 @@ const creditCardUtilsTool = {
     };
   },
 
-  // Executar identificação de bandeiras
   executarIdentificacao(args) {
     const { numeros = [] } = args;
 
@@ -540,7 +512,6 @@ const creditCardUtilsTool = {
     };
   },
 
-  // Executar formatação de cartões
   executarFormatacao(args) {
     const { numeros = [], formato = 'com_mascara' } = args;
 
@@ -587,7 +558,6 @@ const creditCardUtilsTool = {
     };
   },
 
-  // Executar análise completa de cartões
   executarAnalise(args) {
     const { numeros = [] } = args;
 
@@ -643,13 +613,11 @@ const creditCardUtilsTool = {
 
 module.exports = creditCardUtilsTool;
 
-// Testes unitários
 if (require.main === module) {
   const assert = require('assert');
 
   console.log('🧪 Executando testes unitários...\n');
 
-  // Teste 1: Gerar e validar Visa
   console.log('1. Testando Visa...');
   const visaNumber = creditCardUtilsTool.gerarNumero('visa');
   const visaValid = creditCardUtilsTool.validarLuhn(visaNumber);
@@ -660,7 +628,6 @@ if (require.main === module) {
   assert(visaNumber.length === 16, 'Visa deve ter 16 dígitos');
   console.log(`   ✅ Visa: ${visaNumber} - Válido: ${visaValid} - Bandeira: ${visaBandeira}`);
 
-  // Teste 2: Gerar e validar Mastercard (série 2)
   console.log('2. Testando Mastercard...');
   const mastercardNumber = creditCardUtilsTool.gerarNumero('mastercard');
   const mastercardValid = creditCardUtilsTool.validarLuhn(mastercardNumber);
@@ -671,7 +638,6 @@ if (require.main === module) {
   assert(mastercardNumber.length === 16, 'Mastercard deve ter 16 dígitos');
   console.log(`   ✅ Mastercard: ${mastercardNumber} - Válido: ${mastercardValid} - Bandeira: ${mastercardBandeira}`);
 
-  // Teste 3: Gerar e validar Elo
   console.log('3. Testando Elo...');
   const eloNumber = creditCardUtilsTool.gerarNumero('elo');
   const eloValid = creditCardUtilsTool.validarLuhn(eloNumber);
@@ -682,7 +648,6 @@ if (require.main === module) {
   assert(eloNumber.length === 16, 'Elo deve ter 16 dígitos');
   console.log(`   ✅ Elo: ${eloNumber} - Válido: ${eloValid} - Bandeira: ${eloBandeira}`);
 
-  // Teste 4: Gerar e validar Hipercard
   console.log('4. Testando Hipercard...');
   const hipercardNumber = creditCardUtilsTool.gerarNumero('hipercard');
   const hipercardValid = creditCardUtilsTool.validarLuhn(hipercardNumber);
@@ -693,15 +658,13 @@ if (require.main === module) {
   assert(hipercardNumber.length === 16, 'Hipercard deve ter 16 dígitos');
   console.log(`   ✅ Hipercard: ${hipercardNumber} - Válido: ${hipercardValid} - Bandeira: ${hipercardBandeira}`);
 
-  // Teste 5: Verificar ambiguidade resolvida (Elo vs Visa)
   console.log('5. Testando resolução de ambiguidade...');
-  const eloAmbiguo = '4312740000000000'; // Começa com 431274 (Elo), mas também com 4 (Visa)
+  const eloAmbiguo = '4312740000000000';
   const bandeiraAmbigua = creditCardUtilsTool.identificarBandeira(eloAmbiguo);
 
   assert(bandeiraAmbigua === 'elo', 'Número 431274... deve ser identificado como Elo, não Visa');
   console.log(`   ✅ Ambiguidade resolvida: ${eloAmbiguo} identificado como ${bandeiraAmbigua}`);
 
-  // Teste 6: Verificar IINs reais
   console.log('6. Testando IINs reais...');
   const visaReal = '4024000000000000';
   const mastercardReal = '5100000000000000';

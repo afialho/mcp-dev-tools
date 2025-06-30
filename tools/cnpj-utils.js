@@ -32,18 +32,13 @@ const cnpjUtilsTool = {
     required: ['operacao']
   },
 
-  // Função para validar CNPJ
   validarCNPJ(cnpj) {
-    // Remove formatação
     const cnpjLimpo = cnpj.replace(/[^\d]/g, '');
-    
-    // Verifica se tem 14 dígitos
+
     if (cnpjLimpo.length !== 14) return false;
-    
-    // Verifica sequências inválidas (00000000000000, 11111111111111, etc.)
+
     if (/^(\d)\1{13}$/.test(cnpjLimpo)) return false;
-    
-    // Calcula primeiro dígito verificador
+
     const multiplicadores1 = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
     let soma = 0;
     for (let i = 0; i < 12; i++) {
@@ -51,11 +46,9 @@ const cnpjUtilsTool = {
     }
     let digito1 = 11 - (soma % 11);
     if (digito1 > 9) digito1 = 0;
-    
-    // Verifica primeiro dígito
+
     if (parseInt(cnpjLimpo[12]) !== digito1) return false;
-    
-    // Calcula segundo dígito verificador
+
     const multiplicadores2 = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
     soma = 0;
     for (let i = 0; i < 13; i++) {
@@ -63,17 +56,13 @@ const cnpjUtilsTool = {
     }
     let digito2 = 11 - (soma % 11);
     if (digito2 > 9) digito2 = 0;
-    
-    // Verifica segundo dígito
+
     return parseInt(cnpjLimpo[13]) === digito2;
   },
 
-  // Função para gerar CNPJ válido
   gerarCNPJ() {
-    // Gera 12 primeiros dígitos aleatórios
     const primeiros12 = Array.from({length: 12}, () => Math.floor(Math.random() * 10));
-    
-    // Calcula primeiro dígito verificador
+
     const multiplicadores1 = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
     let soma = 0;
     for (let i = 0; i < 12; i++) {
@@ -81,8 +70,7 @@ const cnpjUtilsTool = {
     }
     const digito1 = 11 - (soma % 11);
     const dv1 = digito1 > 9 ? 0 : digito1;
-    
-    // Calcula segundo dígito verificador
+
     const multiplicadores2 = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
     soma = 0;
     for (let i = 0; i < 12; i++) {
@@ -91,23 +79,20 @@ const cnpjUtilsTool = {
     soma += dv1 * 2;
     const digito2 = 11 - (soma % 11);
     const dv2 = digito2 > 9 ? 0 : digito2;
-    
+
     return [...primeiros12, dv1, dv2].join('');
   },
 
-  // Função para formatar CNPJ com máscara
   formatarComMascara(cnpj) {
     const cnpjLimpo = cnpj.replace(/[^\d]/g, '');
-    if (cnpjLimpo.length !== 14) return cnpj; // Retorna original se inválido
+    if (cnpjLimpo.length !== 14) return cnpj;
     return cnpjLimpo.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
   },
 
-  // Função para remover máscara do CNPJ
   removerMascara(cnpj) {
     return cnpj.replace(/[^\d]/g, '');
   },
 
-  // Função para obter motivo de invalidez
   obterMotivoInvalidez(cnpj) {
     const cnpjLimpo = cnpj.replace(/[^\d]/g, '');
     

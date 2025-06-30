@@ -40,13 +40,11 @@ const emailUtilsTool = {
     required: ['operacao']
   },
 
-  // Domínios temporários/descartáveis conhecidos
   dominiosTemporarios: [
     '10minutemail.com', 'tempmail.org', 'guerrillamail.com', 'mailinator.com',
     'temp-mail.org', 'throwaway.email', 'maildrop.cc', 'yopmail.com'
   ],
 
-  // Provedores populares
   provedoresPopulares: {
     'gmail.com': 'Google Gmail',
     'outlook.com': 'Microsoft Outlook',
@@ -57,7 +55,6 @@ const emailUtilsTool = {
     'aol.com': 'AOL Mail'
   },
 
-  // Correções comuns de domínios
   correcoesDominios: {
     'gmial.com': 'gmail.com',
     'gmai.com': 'gmail.com',
@@ -68,22 +65,18 @@ const emailUtilsTool = {
     'yaho.com': 'yahoo.com'
   },
 
-  // Função para validar email
   validarEmail(email) {
-    // Regex mais robusta para validação de email
     const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
     
     if (!emailRegex.test(email)) return false;
     
-    // Verificações adicionais
-    if (email.length > 254) return false; // RFC 5321
-    if (email.includes('..')) return false; // Pontos consecutivos
+    if (email.length > 254) return false;
+    if (email.includes('..')) return false;
     if (email.startsWith('.') || email.endsWith('.')) return false;
     
     return true;
   },
 
-  // Função para gerar email
   gerarEmail(tipo = 'aleatorio', dominio = null) {
     const nomesProfissionais = [
       'joao.silva', 'maria.santos', 'pedro.oliveira', 'ana.costa', 'carlos.ferreira',
@@ -114,7 +107,7 @@ const emailUtilsTool = {
                  Math.floor(Math.random() * 1000);
         dominioFinal = dominio || dominiosTeste[Math.floor(Math.random() * dominiosTeste.length)];
         break;
-      default: // aleatorio
+      default:
         prefixo = nomesAleatorios[Math.floor(Math.random() * nomesAleatorios.length)] + 
                  Math.floor(Math.random() * 10000);
         dominioFinal = dominio || dominiosPopulares[Math.floor(Math.random() * dominiosPopulares.length)];
@@ -123,17 +116,14 @@ const emailUtilsTool = {
     return `${prefixo}@${dominioFinal}`;
   },
 
-  // Função para extrair emails de texto
   extrairEmails(texto) {
     const emailRegex = /[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+/g;
     const emails = texto.match(emailRegex) || [];
     
-    // Remove duplicatas e filtra emails válidos
     const emailsUnicos = [...new Set(emails)];
     return emailsUnicos.filter(email => this.validarEmail(email));
   },
 
-  // Função para analisar email
   analisarEmail(email) {
     const [usuario, dominio] = email.split('@');
     
@@ -150,12 +140,9 @@ const emailUtilsTool = {
     return analise;
   },
 
-  // Função para formatar email
   formatarEmail(email) {
-    // Normaliza: remove espaços, converte para minúscula
     let emailFormatado = email.trim().toLowerCase();
     
-    // Verifica se precisa de correção de domínio
     const [usuario, dominio] = emailFormatado.split('@');
     if (dominio && this.correcoesDominios[dominio]) {
       emailFormatado = `${usuario}@${this.correcoesDominios[dominio]}`;
@@ -164,7 +151,6 @@ const emailUtilsTool = {
     return emailFormatado;
   },
 
-  // Função para obter motivo de invalidez
   obterMotivoInvalidez(email) {
     if (!email.includes('@')) return 'Falta o símbolo @';
     if (email.split('@').length !== 2) return 'Múltiplos símbolos @';
